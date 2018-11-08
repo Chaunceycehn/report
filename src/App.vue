@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <router-view/>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <router-view class="page"></router-view>
+    <nav class="tab">
+      <router-link class="tab_btn selected" to="/">查询影像</router-link>
+      <router-link class="tab_btn" to="/about">我的影像/报告</router-link>
+    </nav>
   </div>
 </template>
 
@@ -13,23 +13,49 @@
 html { font-size: 100%; } 
 body { background-color: #f8f8f8; min-height: 100vh; } 
 li { list-style: none; } 
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+.tab {
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+  border-top: 0.5px solid #ddd;
+  font-size: 14px;
+  border-radius: 5px;
+  vertical-align: top;
+  white-space: normal;
+  z-index: 1;
+
 }
-#nav {
-  padding: 30px;
+.tab_btn {
+  padding: 10px 0 10px 0;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+   color: black;
+
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.tab-content-list {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  align-items: center;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.router-link-exact-active {
+  color: #00bf9d;
+}
+.router-link-exact-active::after {
+  content: "";
+  height: 2px;
+  width: 100%;
+  background: #00a08a;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 </style>

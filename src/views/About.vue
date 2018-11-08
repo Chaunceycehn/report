@@ -1,5 +1,14 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <allreport></allreport>
   </div>
 </template>
+<script>
+import allreport from "@/components/allreport.vue";
+export default {
+  name: "about",
+  components: {
+    allreport
+  }
+};
+</script>

@@ -1,21 +1,38 @@
 <template>
   <div class="home">
     <hearder/>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <bodyMain/>
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import Hearder from '@/components/hearder.vue'
+import bodyMain from "@/components/main.vue";
+import Hearder from "@/components/hearder.vue";
+import allreport from "@/components/allreport.vue";
 
 export default {
-  name: 'home',
+  name: "home",
   components: {
-    HelloWorld,
-    Hearder
+    bodyMain,
+    Hearder,
+    allreport,
+  },
+  data() {
+    return {
+      isActive:true
+    };
+  },
+  computed: {
+    currentTabComponent: function() {
+      return "tab-" + this.currentTab.toLowerCase();
+    }
   }
-}
+};
 </script>
+
+<style scoped>
+
+</style>
+
