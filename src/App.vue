@@ -3,16 +3,35 @@
     <router-view class="page"></router-view>
     <nav class="tab">
       <router-link class="tab_btn selected" to="/">查询影像</router-link>
-      <router-link class="tab_btn" to="/about">我的影像/报告</router-link>
+      <router-link class="tab_btn" to="/myreport">我的影像/报告</router-link>
     </nav>
   </div>
 </template>
 
+<script>
+export default {
+
+};
+</script>
+
+
+
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; } 
-html { font-size: 100%; } 
-body { background-color: #f8f8f8; min-height: 100vh; } 
-li { list-style: none; } 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 100%;
+}
+body {
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+li {
+  list-style: none;
+}
 
 .tab {
   position: fixed;
@@ -27,7 +46,6 @@ li { list-style: none; }
   vertical-align: top;
   white-space: normal;
   z-index: 1;
-
 }
 .tab_btn {
   padding: 10px 0 10px 0;
@@ -35,8 +53,7 @@ li { list-style: none; }
   cursor: pointer;
   position: relative;
   text-decoration: none;
-   color: black;
-
+  color: black;
 }
 
 .tab-content-list {

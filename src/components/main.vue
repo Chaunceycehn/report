@@ -4,12 +4,12 @@
       <li>
         <span class="tit">起始日期</span>
         <div id="targetContainer1"></div>
-        <datepicker></datepicker>
+        <datepicker v-on:input="selectstarttime" :time="starttime"></datepicker>
       </li>
       <li>
         <span class="tit">结束日期</span>
         <div id="targetContainer2"></div>
-        <datepicker></datepicker>
+        <datepicker v-on:input="selectendtime" :time="endtime"></datepicker>
       </li>
       <li>
         <span class="tit">手机号码</span>
@@ -18,8 +18,8 @@
       <li>
         <span class="tit">验证码</span>
         <input type="text" value="" class="text" placeholder="请输入验证码">
-        <button class="btn btnCur2" id="btn" value="发送验证码">发送验证码</button>
-        <!-- <div class="sameBtn btnCur2">发送验证码</div> -->
+        <span class="btn" id="btn" value="发送验证码" v-if="show" @click="getCode">获取验证码</span>
+        <span class="dactive" id="btn" value="发送验证码" v-if="!show">{{count}} s</span>
       </li>
     </ul>
     <div class="Advisory">
@@ -36,8 +36,47 @@ export default {
   components: {
     datepicker
   },
+  data() {
+    return {
+      show: true,
+      count: "",
+      timer: null
+    };
+  },
   props: {
     msg: String
+  },
+  methods: {
+    selectstarttime: function(data) {
+      this.$store.commit("selectstarttime", data);
+    },
+    selectendtime: function(data) {
+      this.$store.commit("selectendtime", data);
+    },
+    getCode() {
+      const TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000);
+      }
+    }
+  },
+  computed: {
+    starttime() {
+      return this.$store.state.starttime;
+    },
+    endtime() {
+      return this.$store.state.endtime;
+    }
   }
 };
 </script>
@@ -76,7 +115,7 @@ export default {
   right: 3%;
   padding: 0 5px;
   height: 3rem;
-  line-height: 14px;
+  line-height: 3rem;
   font-size: 12px;
   color: white;
   background: #00a08a;
@@ -91,6 +130,22 @@ export default {
   background: #18836a;
 }
 .btn.current {
+  background: #b1b1b1;
+}
+.dactive{
+  width: 25vw;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  right: 3%;
+  padding: 0 5px;
+  height: 3rem;
+  line-height: 3rem;
+  font-size: 12px;
+  color: white;
+  outline: none;
+  border-radius: 0;
+  border: 0;
   background: #b1b1b1;
 }
 input {

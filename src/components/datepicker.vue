@@ -1,64 +1,52 @@
 <template>
-    <div class="date-picker" @click.stop>
-        <div id="targetContainer1" @click="openPanel">
-            <input class="input" v-model="dateValue" disabled/>
-        </div>
-        <!-- 动画特效 -->
-        <transition name="fadeDownBig">
-            <div class="date-panel" v-show="panelState">
-                <div class="topbar">
-                    <span @click="leftBig">&lt;&lt;</span>
-                    <span @click="left">&lt;</span>
-                    <span class="year" @click="panelType = 'year'">{{tmpYear}}</span>
-                    <span class="month" @click="panelType = 'month'">{{changeTmpMonth}}</span>
-                    <span @click="right">&gt;</span>
-                    <span @click="rightBig">&gt;&gt;</span>
-                </div>
-                <!-- 年面板 -->
-                <div class="type-year" v-show="panelType === 'year'">
-                    <ul class="year-list">
-                        <li
-                            v-for="(item, index) in yearList"
-                            :key="index"
-                            @click="selectYear(item)"
-                        >
-                            <span :class="{selected: item === tmpYear}">{{item}}</span>
-                        </li>
-                    </ul>
-                </div>
-                <!-- 月面板 -->
-                <div class="type-year" v-show="panelType === 'month'">
-                    <ul class="year-list">
-                        <li
-                            v-for="(item, index) in monthList"
-                            :key="index"
-                            @click="selectMonth(item)"
-                        >
-                            <span :class="{selected: item.value === tmpMonth}">{{item.label}}</span>
-                        </li>
-                    </ul>
-                </div>
-                <!-- 日期面板 -->
-                <div class="date-group" v-show="panelType === 'date'">
-                    <span
-                        v-for="(item, index) in weekList"
-                        :key="index"
-                        class="weekday"
-                    >{{item.label}}</span>
-                    <ul class="date-list">
-                        <li
-                            v-for="(item, index) in dateList"
-                            v-text="item.value"
-                            :class="{preMonth: item.previousMonth, nextMonth: item.nextMonth,
-                selected: date === item.value && month === tmpMonth && item.currentMonth, invalid: validateDate(item)}"
-                            :key="index"
-                            @click="selectDate(item)"
-                        ></li>
-                    </ul>
-                </div>
-            </div>
-        </transition>
+  <div class="date-picker" @click.stop>
+    <div id="targetContainer1" @click="openPanel">
+      <input class="input" v-model="time" disabled>
     </div>
+    <!-- 动画特效 -->
+    <transition name="fadeDownBig">
+      <div class="date-panel" v-show="panelState">
+        <div class="topbar">
+          <span @click="leftBig">&lt;&lt;</span>
+          <span @click="left">&lt;</span>
+          <span class="year" @click="panelType = 'year'">{{tmpYear}}</span>
+          <span class="month" @click="panelType = 'month'">{{changeTmpMonth}}</span>
+          <span @click="right">&gt;</span>
+          <span @click="rightBig">&gt;&gt;</span>
+        </div>
+        <!-- 年面板 -->
+        <div class="type-year" v-show="panelType === 'year'">
+          <ul class="year-list">
+            <li v-for="(item, index) in yearList" :key="index" @click="selectYear(item)">
+              <span :class="{selected: item === tmpYear}">{{item}}</span>
+            </li>
+          </ul>
+        </div>
+        <!-- 月面板 -->
+        <div class="type-year" v-show="panelType === 'month'">
+          <ul class="year-list">
+            <li v-for="(item, index) in monthList" :key="index" @click="selectMonth(item)">
+              <span :class="{selected: item.value === tmpMonth}">{{item.label}}</span>
+            </li>
+          </ul>
+        </div>
+        <!-- 日期面板 -->
+        <div class="date-group" v-show="panelType === 'date'">
+          <span v-for="(item, index) in weekList" :key="index" class="weekday">{{item.label}}</span>
+          <ul class="date-list">
+            <li
+              v-for="(item, index) in dateList"
+              v-text="item.value"
+              :class="{preMonth: item.previousMonth, nextMonth: item.nextMonth,
+                selected: date === item.value && month === tmpMonth && item.currentMonth, invalid: validateDate(item)}"
+              :key="index"
+              @click="selectDate(item)"
+            ></li>
+          </ul>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -106,9 +94,11 @@ export default {
     format: {
       type: String,
       default: "yyyy-MM-dd"
-    }
+    },
+    time:"",
   },
   computed: {
+
     dateList() {
       //获取当月的天数
       let currentMonthLength = new Date(
@@ -204,7 +194,7 @@ export default {
       console.log(selectDay.getTime());
       this.dateValue = this.formatDate(selectDay.getTime());
       this.panelState = !this.panelState;
-      this.$emit("input", selectDay);
+      this.$emit("input", this.dateValue);
     },
     selectYear(item) {
       this.tmpYear = item;
@@ -265,7 +255,7 @@ export default {
   color: #6a6f77;
   position: relative;
   z-index: 999;
-  pointer-events:none;
+  pointer-events: none;
   background-color: #000;
 }
 

@@ -3,16 +3,16 @@
     <div class="headbox">
       <div @click="show = !show" class="dwbox" id="dwbox">
         <img src="@/assets/dw.png" class="dwicon">
-        <div id="selecedcity">{{city}}</div>
+        <div>{{selectedcityname}}</div>
       </div>
       <div class="title">影像报告查询</div>
     </div>
     <transition name="fade">
       <div class="city" id="city" v-if="show">
-        <select v-model="prov" >
+        <select v-model="prov">
           <option v-for="option in arr" :value="option.name">{{ option.name }}</option>
         </select>
-        <select v-model="city" >
+        <select v-model="city">
           <option v-for="option in cityArr" :value="option.name">{{ option.name }}</option>
         </select>
       </div>
@@ -22,12 +22,10 @@
 
 <script>
 var arrAll = [
-  { 
-    name: "选择省份", 
-        sub: [
-      { name: "请选择"},
-    ],
-      type: 1 
+  {
+    name: "选择省份",
+    sub: [{ name: "请选择" }],
+    type: 1
   },
   {
     name: "浙江",
@@ -76,27 +74,25 @@ var arrAll = [
       {
         name: "丽水",
         type: 0
-      },
+      }
     ],
     type: 1
-  },//浙江
+  } //浙江
 ];
 export default {
   name: "Header",
   data() {
     return {
-      selecedcity: "地区",
       show: true,
       arr: arrAll,
       prov: "浙江",
       city: "请选择",
-      district: "请选择",
       cityArr: [],
-      cityname:''
+      cityname: ""
     };
   },
   methods: {
-    dropdown(el) {
+    dropdown() {
       this.show = !this.show;
     },
     updateCity: function() {
@@ -108,11 +104,16 @@ export default {
         }
       }
       this.city = this.cityArr[0].name;
+      
     },
     updateDistrict: function() {
-      if(this.show === true){
+      if (this.show === true) {
         this.show = !this.show;
       }
+    },
+    selectcity: function() {
+      this.$store.commit("selectcity", this.city);
+      
     }
   },
   beforeMount: function() {
@@ -125,9 +126,14 @@ export default {
     },
     city: function() {
       this.updateDistrict();
+      this.selectcity();
     }
   },
-  computed: {}
+  computed: {
+    selectedcityname() {
+      return this.$store.state.selectedcityname;
+    }
+  }
 };
 </script>
 
@@ -179,8 +185,26 @@ export default {
   justify-content: space-around;
 }
 
-select { margin: 0 10px; font-family: "微软雅黑"; background: rgba(0,0,0,0); font-size: 15px; color: white; text-align: center; border: 1px #e7e6e6 solid; border-radius: 5px; } 
-option { color: white; background: #41b883; line-height: 20px; } 
-select:focus { border: 2px #ddd solid; box-shadow: 0 0 15px 1px #DDDDDD; } 
-option:hover { background: #EBCCD1; } 
+select {
+  margin: 0 10px;
+  font-family: "微软雅黑";
+  background: rgba(0, 0, 0, 0);
+  font-size: 15px;
+  color: white;
+  text-align: center;
+  border: 1px #e7e6e6 solid;
+  border-radius: 5px;
+}
+option {
+  color: white;
+  background: #41b883;
+  line-height: 20px;
+}
+select:focus {
+  border: 2px #ddd solid;
+  box-shadow: 0 0 15px 1px #dddddd;
+}
+option:hover {
+  background: #ebccd1;
+}
 </style>

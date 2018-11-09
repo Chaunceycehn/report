@@ -1,12 +1,12 @@
 <template>
-  <div class="about">
+  <div class="myreport">
     <allreport></allreport>
   </div>
 </template>
 <script>
 import allreport from "@/components/allreport.vue";
 export default {
-  name: "about",
+  name: "myreport",
   components: {
     allreport,
   }

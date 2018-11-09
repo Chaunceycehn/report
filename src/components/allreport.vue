@@ -4,70 +4,62 @@
             <div class="title">我的影像/报告</div>
         </div>
         <ul class="MyReport">
-            <li>
+            <router-link to="/reportdetail" tag="li">
                 <img src="@/assets/ct.png" alt="">
                 <div>
                     <span>平阳县人民医院</span>
                     <span>扫描部位：颅脑平扫,颔面部平</span>
                     <span>检查日期: 2018-02-19</span>
                 </div>
-            </li>
-            <li>
+            </router-link>
+            <router-link  to="/reportdetail" tag="li">
                 <img src="@/assets/ct.png" alt="">
                 <div>
                     <span>平阳县人民医院</span>
                     <span>扫描部位：颅脑平扫,颔面部平</span>
                     <span>检查日期: 2018-02-19</span>
                 </div>
-            </li>
-            <li>
+            </router-link>
+            <router-link  to="/reportdetail" tag="li">
                 <img src="@/assets/ct.png" alt="">
                 <div>
                     <span>平阳县人民医院</span>
                     <span>扫描部位：颅脑平扫,颔面部平</span>
                     <span>检查日期: 2018-02-19</span>
                 </div>
-            </li>
-            <li>
+            </router-link>
+            <router-link  to="/reportdetail" tag="li">
                 <img src="@/assets/ct.png" alt="">
                 <div>
                     <span>平阳县人民医院</span>
                     <span>扫描部位：颅脑平扫,颔面部平</span>
                     <span>检查日期: 2018-02-19</span>
                 </div>
-            </li>
-            <li>
+            </router-link>
+            <router-link  to="/reportdetail" tag="li">
                 <img src="@/assets/ct.png" alt="">
                 <div>
                     <span>平阳县人民医院</span>
                     <span>扫描部位：颅脑平扫,颔面部平</span>
                     <span>检查日期: 2018-02-19</span>
                 </div>
-            </li>
-            <li>
+            </router-link>
+            <router-link  to="/reportdetail" tag="li">
                 <img src="@/assets/ct.png" alt="">
                 <div>
                     <span>平阳县人民医院</span>
                     <span>扫描部位：颅脑平扫,颔面部平</span>
                     <span>检查日期: 2018-02-19</span>
                 </div>
-            </li>
-            <li>
+            </router-link>
+            <router-link  to="/reportdetail" tag="li">
                 <img src="@/assets/ct.png" alt="">
                 <div>
                     <span>平阳县人民医院</span>
                     <span>扫描部位：颅脑平扫,颔面部平</span>
                     <span>检查日期: 2018-02-19</span>
                 </div>
-            </li>
-            <li>
-                <img src="@/assets/ct.png" alt="">
-                <div>
-                    <span>平阳县人民医院</span>
-                    <span>扫描部位：颅脑平扫,颔面部平</span>
-                    <span>检查日期: 2018-02-19</span>
-                </div>
-            </li>
+            </router-link>
         </ul>
     </div>
 </template>
@@ -92,7 +84,6 @@ export default {};
 }
 
 .tab_box {
-  padding-bottom: 5px;
   display: block;
   width: 100vw;
 }
@@ -104,7 +95,7 @@ export default {};
 .MyReport > li {
   display: flex;
   flex-direction: row;
-  margin: 20px 0;
+  margin: 10px 0;
   justify-content: space-between;
 }
 .MyReport > li > div {
@@ -113,12 +104,8 @@ export default {};
   flex: 1;
   font-size: 14px;
 }
-.MyReport > li > div > span:last-child {
-  align-self: flex-end;
-  position: relative;
-  bottom: -15px;
-  right: 3px;
-  font-size: 10px;
+.MyReport > li:last-child {
+  margin-bottom: 40px;
 }
 .MyReport > li:hover {
   background-color: #e7e6e6;
