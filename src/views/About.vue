@@ -8,7 +8,7 @@ import allreport from "@/components/allreport.vue";
 export default {
   name: "about",
   components: {
-    allreport
+    allreport,
   }
 };
 </script>

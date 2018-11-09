@@ -2,7 +2,6 @@
   <div class="home">
     <hearder/>
     <bodyMain/>
-
   </div>
 </template>
 
