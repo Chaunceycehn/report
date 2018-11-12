@@ -9,29 +9,28 @@
 // @ is an alias to /src
 import bodyMain from "@/components/main.vue";
 import Hearder from "@/components/hearder.vue";
-import allreport from "@/components/allreport.vue";
 
 export default {
   name: "home",
   components: {
     bodyMain,
-    Hearder,
-    allreport,
+    Hearder
   },
   data() {
     return {
-      isActive:true
+      isActive: true,
     };
   },
-  computed: {
-    currentTabComponent: function() {
-      return "tab-" + this.currentTab.toLowerCase();
-    }
-  }
+  // computed: {
+  //   currentTabComponent: function() {
+  //     return "tab-" + this.currentTab.toLowerCase();
+  //   }
+  // },
+
+
 };
 </script>
 
 <style scoped>
-
 </style>
 

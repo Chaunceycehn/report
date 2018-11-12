@@ -22,9 +22,10 @@
         <span class="dactive" id="btn" value="发送验证码" v-if="!show">{{count}} s</span>
       </li>
     </ul>
-    <div class="Advisory">
+    <div class="Advisory" @click="getarticle">
       <span>点击查询</span>
     </div>
+    <div v-for="currency in info" v-html="currency.content">{{currency}}</div>
   </div>
 </template>
 
@@ -40,7 +41,21 @@ export default {
     return {
       show: true,
       count: "",
-      timer: null
+      timer: null,
+      info: "",
+      getmail: {
+        method: "SendMessage",
+        telephone: "15088953082",
+        verify_code: "123"
+      },
+      getreport: { method: "GetReportDetails", accessno: "201805050019" },
+      getasrereprt: {
+        method: "GetRegionalReports",
+        telephone: "15088953082",
+        area_code: "温州",
+        start_time: "2018/8/26",
+        end_time: "2018/1/26"
+      }
     };
   },
   props: {
@@ -68,6 +83,32 @@ export default {
           }
         }, 1000);
       }
+    },
+    // getarticle() {
+    //   this.$http
+    //     .get(
+    //       `https://interface.meiriyiwen.com/article/day?dev=1&date=${
+    //         this.templetime
+    //       }`
+    //     )
+    //     .then(response => (this.info = response.data));
+    // }
+    getarticle() {
+      this.$http({
+        // headers: {
+        //   "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        // },
+        // transformRequest: [data => this.$qs.stringify(data)],
+        method: "post",
+        url: "/AjaxTest/TestMethod.ashx",
+        data: {     "method": "GetReportDetails",     "accessno": "201805050019" }
+      })
+        .then(function(response) {
+          console.log(response.data.data);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   computed: {
@@ -76,6 +117,9 @@ export default {
     },
     endtime() {
       return this.$store.state.endtime;
+    },
+    templetime() {
+      return this.$store.state.starttime.split("-").join("");
     }
   }
 };
@@ -118,7 +162,7 @@ export default {
   line-height: 3rem;
   font-size: 12px;
   color: white;
-  background: #00a08a;
+  background: #41b883;
   outline: none;
   border-radius: 0;
   border: 0;
@@ -132,7 +176,7 @@ export default {
 .btn.current {
   background: #b1b1b1;
 }
-.dactive{
+.dactive {
   width: 25vw;
   text-align: center;
   display: inline-block;
@@ -171,7 +215,7 @@ input {
   width: 80vw;
   padding: 10px;
   margin: 20px 0;
-  background-color: #00a08a;
+  background-color: #41b883;
   color: white;
   display: flex;
   justify-content: center;

@@ -191,7 +191,7 @@ export default {
       if (item.previousMonth) this.tmpMonth--;
       if (item.nextMonth) this.tmpMonth++;
       let selectDay = new Date(this.tmpYear, this.tmpMonth, this.nowValue);
-      console.log(selectDay.getTime());
+      // console.log(selectDay.getTime());
       this.dateValue = this.formatDate(selectDay.getTime());
       this.panelState = !this.panelState;
       this.$emit("input", this.dateValue);

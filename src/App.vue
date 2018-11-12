@@ -64,13 +64,13 @@ li {
 }
 
 .router-link-exact-active {
-  color: #00bf9d;
+  color: #41b883;
 }
 .router-link-exact-active::after {
   content: "";
   height: 2px;
   width: 100%;
-  background: #00a08a;
+  background: #41b883;
   position: absolute;
   bottom: 0;
   left: 0;
