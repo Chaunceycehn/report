@@ -75,4 +75,5 @@ li {
   bottom: 0;
   left: 0;
 }
+input{height: 50px;}
 </style>

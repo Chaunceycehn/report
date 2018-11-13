@@ -249,7 +249,7 @@ export default {
   border: 0px;
   width: 70vw;
   font-size: 1rem;
-  height: 3rem;
+  height: 2.5rem;
   border-radius: 4px;
   border: 1px solid #c8cccf;
   color: #6a6f77;
@@ -305,7 +305,7 @@ export default {
 .weekday {
   display: inline-block;
   font-size: 13px;
-  width: 30px;
+  width: 13%;
   color: #c5c8ce;
   text-align: center;
 }
@@ -324,15 +324,14 @@ ul {
 }
 .date-list {
   width: 70vw;
-  text-align: left;
-  height: 180px;
+  text-align: center;
+  height: 200px;
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 1px;
 }
 .date-list li {
   display: inline-block;
-  width: 16%;
-  height: 28px;
+  width: 13%;
   line-height: 30px;
   text-align: center;
   cursor: pointer;
@@ -361,7 +360,7 @@ input {
   border: 0px;
   width: 70vw;
   font-size: 1rem;
-  height: 3rem;
+  height: 2.5rem;
   border-radius: 4px;
   border: 1px solid #c8cccf;
   color: #6a6f77;

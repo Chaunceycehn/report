@@ -37,18 +37,18 @@ module.exports = {
     // },
 
     //   lintOnSave：{ type:Boolean default:true } 问你是否使用eslint
-    lintOnSave: true,
+    // lintOnSave: true,
     // productionSourceMap：{ type:Bollean,default:true } 生产源映射
     // 如果您不需要生产时的源映射，那么将此设置为false可以加速生产构建
-    productionSourceMap: false,
+    // productionSourceMap: false,
     // devServer:{type:Object} 3个属性host,port,https
     // 它支持webPack-dev-server的所有选项
 
     devServer: {
-        port: 8080, // 端口号
-        host: 'localhost',
-        https: false, // https:{type:Boolean}
-        open: true, //配置自动启动浏览器
+        // port: 8080, // 端口号
+        // host: 'localhost',
+        // https: false, // https:{type:Boolean}
+        // open: true, //配置自动启动浏览器
         // proxy: 'http://192.168.0.5:8001/AjaxTest/TestMethod.ashx' // 配置跨域处理,只有一个代理
         proxy: {
             // '/sell': {
@@ -63,6 +63,13 @@ module.exports = {
                 changeOrigin: true,  // 是否跨域
                 pathRewrite: {
                     '^/AjaxTest/TestMethod.ashx': '/AjaxTest/TestMethod.ashx'  // 替换target中的请求地址，也就是说，在请求的时候，url用'/proxy'代替'http://ip.taobao.com'
+                }
+            },
+            '/api':{
+                target: 'http://news-at.zhihu.com',   // 需要请求的地址
+                changeOrigin: true,  // 是否跨域
+                pathRewrite: {
+                    '^/api': '/api/4'  // 替换target中的请求地址，也就是说，在请求的时候，url用'/proxy'代替'http://ip.taobao.com'
                 }
             }
 

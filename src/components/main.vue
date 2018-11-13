@@ -13,19 +13,18 @@
       </li>
       <li>
         <span class="tit">手机号码</span>
-        <input type="text" value="" class="text" placeholder="请输入手机号码">
+        <input type="text" value="" class="text" placeholder="请输入手机号码" v-model="telephone">
       </li>
       <li>
         <span class="tit">验证码</span>
-        <input type="text" value="" class="text" placeholder="请输入验证码">
+        <input type="text" value="" class="text" placeholder="请输入验证码" v-model="vcode">
         <span class="btn" id="btn" value="发送验证码" v-if="show" @click="getCode">获取验证码</span>
         <span class="dactive" id="btn" value="发送验证码" v-if="!show">{{count}} s</span>
       </li>
     </ul>
-    <div class="Advisory" @click="getarticle">
+    <div class="Advisory" @click="getreport">
       <span>点击查询</span>
     </div>
-    <div v-for="currency in info" v-html="currency.content">{{currency}}</div>
   </div>
 </template>
 
@@ -43,25 +42,17 @@ export default {
       count: "",
       timer: null,
       info: "",
-      getmail: {
-        method: "SendMessage",
-        telephone: "15088953082",
-        verify_code: "123"
-      },
-      getreport: { method: "GetReportDetails", accessno: "201805050019" },
-      getasrereprt: {
-        method: "GetRegionalReports",
-        telephone: "15088953082",
-        area_code: "温州",
-        start_time: "2018/8/26",
-        end_time: "2018/1/26"
-      }
+      telephone: "",
+      vcode: ""
     };
   },
   props: {
     msg: String
   },
   methods: {
+    showToast(text, t) {
+      this.$toast(text, t);
+    },
     selectstarttime: function(data) {
       this.$store.commit("selectstarttime", data);
     },
@@ -69,54 +60,82 @@ export default {
       this.$store.commit("selectendtime", data);
     },
     getCode() {
-      const TIME_COUNT = 60;
-      if (!this.timer) {
-        this.count = TIME_COUNT;
-        this.show = false;
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--;
-          } else {
-            this.show = true;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        }, 1000);
+      if (this.telephoneverification(this.telephone)) {
+        this.getvcode()
+        const TIME_COUNT = 60;
+        if (!this.timer) {
+          this.count = TIME_COUNT;
+          this.show = false;
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.count--;
+            } else {
+              this.show = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000);
+        }
+      } else {
+        this.showToast("请输入正确的电话号码", 2000);
       }
     },
-    // getarticle() {
-    //   this.$http
-    //     .get(
-    //       `https://interface.meiriyiwen.com/article/day?dev=1&date=${
-    //         this.templetime
-    //       }`
-    //     )
-    //     .then(response => (this.info = response.data));
-    // }
-    getarticle() {
+    getreport() {
       this.$http({
-        // headers: {
-        //   "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-        // },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         // transformRequest: [data => this.$qs.stringify(data)],
         method: "post",
         url: "/AjaxTest/TestMethod.ashx",
-        data: {     "method": "GetReportDetails",     "accessno": "201805050019" }
-      })
-        .then(function(response) {
-          console.log(response.data.data);
+        data: this.$qs.stringify({
+          param: `{    
+            "method": "GetRegionalReports",   
+            "telephone": "${this.telephone}",    
+            "area_code": "${this.selectedcityname}",    
+            "start_time": "${this.starttime}",     
+            "end_time": "${this.endtime}" }`
         })
-        .catch(function(error) {
+      })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
           console.log(error);
         });
+    },
+    getvcode() {
+      this.$http({
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        method: "post",
+        url: "/AjaxTest/TestMethod.ashx",
+        data: this.$qs.stringify({
+          param: `{    
+            "method": "SendMessage",   
+            "telephone": "${this.telephone}",   
+            "verify_code": "123" }`
+        })
+      })
+        .then(response => {
+          this.showToast(response.data.data, 2000);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    telephoneverification(tel) {
+      var reg = /^1[3|4|5|7|8][0-9]{9}$/; //验证规则
+      var phoneNum = tel; //手机号码
+      return reg.test(phoneNum); //true
     }
   },
   computed: {
     starttime() {
-      return this.$store.state.starttime;
+      return this.$store.state.starttime.split("-").join("/");
     },
     endtime() {
-      return this.$store.state.endtime;
+      return this.$store.state.endtime.split("-").join("/");
+    },
+    selectedcityname() {
+      return this.$store.state.selectedcityname;
     },
     templetime() {
       return this.$store.state.starttime.split("-").join("");
@@ -143,7 +162,8 @@ export default {
   justify-content: space-between;
   padding: 10px;
   text-align: center;
-  line-height: 44px;
+  line-height: 2.5rem;
+  margin: 5px 0px;
 }
 .patientinput .tit {
   font-size: 1rem;
@@ -158,8 +178,8 @@ export default {
   position: absolute;
   right: 3%;
   padding: 0 5px;
-  height: 3rem;
-  line-height: 3rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
   font-size: 12px;
   color: white;
   background: #41b883;
@@ -183,8 +203,8 @@ export default {
   position: absolute;
   right: 3%;
   padding: 0 5px;
-  height: 3rem;
-  line-height: 3rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
   font-size: 12px;
   color: white;
   outline: none;
@@ -204,7 +224,7 @@ input:focus {
 }
 input {
   font-size: 1rem;
-  height: 3rem;
+  height: 2.5rem;
   border-radius: 4px;
   border: 1px solid #c8cccf;
   color: #6a6f77;
