@@ -11,7 +11,9 @@ const store = new Vuex.Store({
         // 放置初始状态 app启动的时候的全局的初始值
         selectedcityname: '地区',
         starttime: '',
-        endtime: ''
+        endtime: '',
+        telephonenum:'',
+        allreport:{},
     },
     mutations: {
         selectcity(state, msg) {
@@ -22,7 +24,14 @@ const store = new Vuex.Store({
         },
         selectendtime(state, msg) {
             state.endtime = msg;
-        }
+        },
+        getmyreport(state, msg) {
+            state.allreport = msg;
+        },
+        gettelephonenum(state, msg) {
+            state.telephonenum = msg;
+        },
+
     }
 })
 // 整合初始状态和变更函数，我们就得到了我们所需的 store

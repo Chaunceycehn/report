@@ -22,9 +22,9 @@
         <span class="dactive" id="btn" value="发送验证码" v-if="!show">{{count}} s</span>
       </li>
     </ul>
-    <div class="Advisory" @click="getreport">
-      <span>点击查询</span>
-    </div>
+    <!-- <router-link class="tab_btn" to="/myreport"> -->
+      <div class="Advisory" @click="getreport">点击查询</div> 
+    <!-- </router-link> -->
   </div>
 </template>
 
@@ -61,7 +61,8 @@ export default {
     },
     getCode() {
       if (this.telephoneverification(this.telephone)) {
-        this.getvcode()
+        this.getvcode();
+        this.$store.commit("gettelephonenum", this.telephone);
         const TIME_COUNT = 60;
         if (!this.timer) {
           this.count = TIME_COUNT;
@@ -89,19 +90,27 @@ export default {
         data: this.$qs.stringify({
           param: `{    
             "method": "GetRegionalReports",   
-            "telephone": "${this.telephone}",    
+            "telephone": "${this.telephonenum}",    
             "area_code": "${this.selectedcityname}",    
             "start_time": "${this.starttime}",     
             "end_time": "${this.endtime}" }`
         })
       })
         .then(response => {
-          console.log(response.data);
+          // let arry = this.picarray(response.data);
+          console.log(response.data.data)
+          this.$store.commit("getmyreport",response.data.data);
+          // console.log(arry);
+          // for (let i = 0; i < arry.length - 1; i++) {
+          //   console.log(JSON.parse(arry[i]));
+          // }
+          this.$router.push({path:'/myreport'});
         })
         .catch(error => {
-          console.log(error);
+          this.showToast(error);
         });
     },
+    // getreport1(){console.log("5")},
     getvcode() {
       this.$http({
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -125,6 +134,13 @@ export default {
       var reg = /^1[3|4|5|7|8][0-9]{9}$/; //验证规则
       var phoneNum = tel; //手机号码
       return reg.test(phoneNum); //true
+    },
+    picarray(array) {
+      let arr = array.split("}");
+      for (let i = 0; i < arr.length - 1; i++) {
+        arr[i] = arr[i] + "}";
+      }
+      return arr;
     }
   },
   computed: {
@@ -139,6 +155,12 @@ export default {
     },
     templetime() {
       return this.$store.state.starttime.split("-").join("");
+    },
+    allreport() {
+      return this.$store.state.allreport;
+    },
+    telephonenum() {
+      return this.$store.state.telephonenum;
     }
   }
 };
@@ -150,6 +172,8 @@ export default {
   padding-bottom: 5px;
   display: block;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
 }
 .patientinput {
   display: flex;
@@ -234,18 +258,22 @@ input {
   font-size: 14px;
   width: 80vw;
   padding: 10px;
-  margin: 20px 0;
   background-color: #41b883;
   color: white;
   display: flex;
   justify-content: center;
   margin-right: auto;
   margin-left: auto;
+  margin-top: 20px;
 }
 .Advisory:hover {
   background: #18836a;
 }
 .Advisory:active {
   background: #18836a;
+}
+.getreport {
+  margin: 20px 0;
+  text-decoration: none;
 }
 </style>

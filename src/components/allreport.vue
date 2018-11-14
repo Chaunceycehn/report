@@ -1,71 +1,59 @@
 <template>
-    <div class="tab_box">
-        <div class="headbox">
-            <div class="title">我的影像/报告</div>
-        </div>
-        <ul class="MyReport">
-            <router-link to="/reportdetail" tag="li">
-                <img src="@/assets/ct.png" alt="">
-                <div>
-                    <span>平阳县人民医院</span>
-                    <span>扫描部位：颅脑平扫,颔面部平</span>
-                    <span>检查日期: 2018-02-19</span>
-                </div>
-            </router-link>
-            <router-link  to="/reportdetail" tag="li">
-                <img src="@/assets/ct.png" alt="">
-                <div>
-                    <span>平阳县人民医院</span>
-                    <span>扫描部位：颅脑平扫,颔面部平</span>
-                    <span>检查日期: 2018-02-19</span>
-                </div>
-            </router-link>
-            <router-link  to="/reportdetail" tag="li">
-                <img src="@/assets/ct.png" alt="">
-                <div>
-                    <span>平阳县人民医院</span>
-                    <span>扫描部位：颅脑平扫,颔面部平</span>
-                    <span>检查日期: 2018-02-19</span>
-                </div>
-            </router-link>
-            <router-link  to="/reportdetail" tag="li">
-                <img src="@/assets/ct.png" alt="">
-                <div>
-                    <span>平阳县人民医院</span>
-                    <span>扫描部位：颅脑平扫,颔面部平</span>
-                    <span>检查日期: 2018-02-19</span>
-                </div>
-            </router-link>
-            <router-link  to="/reportdetail" tag="li">
-                <img src="@/assets/ct.png" alt="">
-                <div>
-                    <span>平阳县人民医院</span>
-                    <span>扫描部位：颅脑平扫,颔面部平</span>
-                    <span>检查日期: 2018-02-19</span>
-                </div>
-            </router-link>
-            <router-link  to="/reportdetail" tag="li">
-                <img src="@/assets/ct.png" alt="">
-                <div>
-                    <span>平阳县人民医院</span>
-                    <span>扫描部位：颅脑平扫,颔面部平</span>
-                    <span>检查日期: 2018-02-19</span>
-                </div>
-            </router-link>
-            <router-link  to="/reportdetail" tag="li">
-                <img src="@/assets/ct.png" alt="">
-                <div>
-                    <span>平阳县人民医院</span>
-                    <span>扫描部位：颅脑平扫,颔面部平</span>
-                    <span>检查日期: 2018-02-19</span>
-                </div>
-            </router-link>
-        </ul>
+  <div class="tab_box">
+    <div class="headbox">
+      <div class="title">我的影像/报告</div>
     </div>
+    <ul class="MyReport">
+      <router-link to="/reportdetail" tag="li">
+        <img src="@/assets/ct.png" alt="">
+        <div>
+          <span>平阳县人民医院</span>
+          <span>扫描部位：颅脑平扫,颔面部平</span>
+          <span>检查日期: 2018-02-19</span>
+        </div>
+      </router-link>
+    </ul>
+    <dir>{{reportdata}}</dir>
+    <dir>{{ccc}}</dir>
+
+    <div>-----------------</div>
+    <div id="targetContainer1" @click="sort">详细信息</div>
+    <dir>{{sortdata}}</dir>
+    <div>---</div>
+    <div>---</div>
+    <div>---</div>
+    <div>---</div>
+    <div>---</div>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      sortdata: {
+        success: "******",
+        data: "??????"
+      }
+    };
+  },
+  updated() {
+    this.sort();
+  },
+  methods: {
+    sort() {
+      this.sortdata = this.$qs.parse(this.reportdata);
+    }
+  },
+  computed: {
+    reportdata() {
+      return this.$store.state.allreport;
+    },
+    ccc() {
+      return this.$store.state.caocao;
+    }
+  }
+};
 </script>
 
 <style scoped>

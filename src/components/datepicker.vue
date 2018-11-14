@@ -1,7 +1,7 @@
 <template>
   <div class="date-picker" @click.stop>
     <div id="targetContainer1" @click="openPanel">
-      <input class="input" v-model="time" disabled>
+      <input class="input" v-model="time" disabled placeholder="请点击并选择时间">
     </div>
     <!-- 动画特效 -->
     <transition name="fadeDownBig">
@@ -96,6 +96,7 @@ export default {
       default: "yyyy-MM-dd"
     },
     time:"",
+    placeholder:"",
   },
   computed: {
 
