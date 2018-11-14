@@ -23,8 +23,14 @@
       </li>
     </ul>
     <!-- <router-link class="tab_btn" to="/myreport"> -->
-      <div class="Advisory" @click="getreport">点击查询</div> 
+    <div class="Advisory" @click="getreport">点击查询</div>
     <!-- </router-link> -->
+    <div class="error" v-if="errors.length">
+      <b>出现错误</b>
+      <ul>
+        <li v-for="error in errors">{{ error }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -43,7 +49,8 @@ export default {
       timer: null,
       info: "",
       telephone: "",
-      vcode: ""
+      vcode: "",
+      errors: []
     };
   },
   props: {
@@ -81,34 +88,45 @@ export default {
         this.showToast("请输入正确的电话号码", 2000);
       }
     },
+
     getreport() {
-      this.$http({
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        // transformRequest: [data => this.$qs.stringify(data)],
-        method: "post",
-        url: "/AjaxTest/TestMethod.ashx",
-        data: this.$qs.stringify({
-          param: `{    
+      this.errors = [];
+      if (!this.starttime) this.errors.push("请选择起始时间");
+      if (!this.endtime) this.errors.push("请选择结束时间");
+      if (!this.telephone) this.errors.push("请输入手机号");
+      if (!this.vcode) this.errors.push("请输入验证码");
+      else if (this.vcode != "1234") {
+        this.errors.push("验证码错误");
+      }
+      if (!this.errors.length) {
+        this.$http({
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          // transformRequest: [data => this.$qs.stringify(data)],
+          method: "post",
+          url: "/AjaxTest/TestMethod.ashx",
+          data: this.$qs.stringify({
+            param: `{    
             "method": "GetRegionalReports",   
             "telephone": "${this.telephonenum}",    
             "area_code": "${this.selectedcityname}",    
             "start_time": "${this.starttime}",     
             "end_time": "${this.endtime}" }`
+          })
         })
-      })
-        .then(response => {
-          // let arry = this.picarray(response.data);
-          console.log(response.data.data)
-          this.$store.commit("getmyreport",response.data.data);
-          // console.log(arry);
-          // for (let i = 0; i < arry.length - 1; i++) {
-          //   console.log(JSON.parse(arry[i]));
-          // }
-          this.$router.push({path:'/myreport'});
-        })
-        .catch(error => {
-          this.showToast(error);
-        });
+          .then(response => {
+            // let arry = this.picarray(response.data);
+            console.log(response.data.data);
+            this.$store.commit("getmyreport", response.data.data);
+            // console.log(arry);
+            // for (let i = 0; i < arry.length - 1; i++) {
+            //   console.log(JSON.parse(arry[i]));
+            // }
+            this.$router.push({ path: "/myreport" });
+          })
+          .catch(error => {
+            this.showToast(error);
+          });
+      }
     },
     // getreport1(){console.log("5")},
     getvcode() {
@@ -275,5 +293,17 @@ input {
 .getreport {
   margin: 20px 0;
   text-decoration: none;
+}
+.error {
+  margin-top: 10px;
+  width: 80%;
+  border: 0.5px red solid;
+  background-color: rgb(233, 134, 134);
+  margin-right: auto;
+  margin-left: auto;
+}
+.error > b {
+  margin-right: auto;
+  margin-left: auto;
 }
 </style>

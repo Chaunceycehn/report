@@ -10,26 +10,27 @@
 // @ is an alias to /src
 import bodyMain from "@/components/main.vue";
 import Hearder from "@/components/hearder.vue";
-import toast from "@/components/toast/toast.vue"
+import toast from "@/components/toast/toast.vue";
+import test from "@/components/test.vue";
+
 export default {
   name: "home",
   components: {
     bodyMain,
     Hearder,
-    toast
+    toast,
+    test
   },
   data() {
     return {
-      isActive: true,
+      isActive: true
     };
-  },
+  }
   // computed: {
   //   currentTabComponent: function() {
   //     return "tab-" + this.currentTab.toLowerCase();
   //   }
   // },
-
-
 };
 </script>
 
