@@ -12,8 +12,9 @@ const store = new Vuex.Store({
         selectedcityname: '地区',
         starttime: '',
         endtime: '',
-        telephonenum:'',
-        allreport:{},
+        telephonenum: '',
+        allreport: [],
+        reportdetail:{},
     },
     mutations: {
         selectcity(state, msg) {
@@ -30,6 +31,9 @@ const store = new Vuex.Store({
         },
         gettelephonenum(state, msg) {
             state.telephonenum = msg;
+        },
+        getreportdetail(state, msg) {
+            state.reportdetail = msg;
         },
 
     }
