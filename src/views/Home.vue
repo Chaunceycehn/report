@@ -11,7 +11,7 @@
 import bodyMain from "@/components/main.vue";
 import Hearder from "@/components/hearder.vue";
 import toast from "@/components/toast/toast.vue";
-import test from "@/components/test.vue";
+// import test from "@/components/test.vue";
 
 export default {
   name: "home",
@@ -19,7 +19,6 @@ export default {
     bodyMain,
     Hearder,
     toast,
-    test
   },
   data() {
     return {

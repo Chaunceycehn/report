@@ -13,9 +13,9 @@
       </li>
       <li>
         <span class="tit">手机号码</span>
-        <input type="text" value="" class="text" placeholder="请输入手机号码" v-model="telephone">
+        <input type="text" class="text" placeholder="请输入手机号码" v-model="telephone">
       </li>
-      <li>
+      <li v-if="vcodeshow">
         <span class="tit">验证码</span>
         <input type="text" value="" class="text" placeholder="请输入验证码" v-model="vcode">
         <span class="btn" id="btn" value="发送验证码" v-if="show" @click="getCode">获取验证码</span>
@@ -26,10 +26,13 @@
     <div class="Advisory" @click="getreport">点击查询</div>
     <!-- </router-link> -->
     <div class="error" v-if="errors.length">
-      <b>出现错误</b>
-      <ul>
-        <li v-for="error in errors">{{ error }}</li>
-      </ul>
+      <img src="@/assets/警告.png" alt="" class="warning">
+      <div class="errortext">
+        <b>出现错误：</b>
+        <ul>
+          <li v-for="(error,index) in errors" :key="index">{{ error }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -50,8 +53,15 @@ export default {
       info: "",
       telephone: "",
       vcode: "",
-      errors: []
+      errors: [],
+      vcodeshow: true
     };
+  },
+  watch: {
+    telephone: function(el) {
+      if (el !== this.telephonenum) this.vcodeshow = true;
+      else this.vcodeshow = false;
+    }
   },
   props: {
     msg: String
@@ -94,10 +104,13 @@ export default {
       if (!this.starttime) this.errors.push("请选择起始时间");
       if (!this.endtime) this.errors.push("请选择结束时间");
       if (!this.telephone) this.errors.push("请输入手机号");
-      if (!this.vcode) this.errors.push("请输入验证码");
-      else if (this.vcode != "1234") {
-        this.errors.push("验证码错误");
+      if (this.vcodeshow === true) {
+        if (!this.vcode) this.errors.push("请输入验证码");
+        else if (this.vcode != "1234") {
+          this.errors.push("验证码错误");
+        }
       }
+
       if (!this.errors.length) {
         this.$http({
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -115,7 +128,7 @@ export default {
         })
           .then(response => {
             // let arry = this.picarray(response.data);
-            console.log(response.data.data);
+            // console.log(response.data.data);
             this.$store.commit("getmyreport", response.data.data);
             // console.log(arry);
             // for (let i = 0; i < arry.length - 1; i++) {
@@ -124,7 +137,7 @@ export default {
             this.$router.push({ path: "/myreport" });
           })
           .catch(error => {
-            this.showToast(error);
+            this.showToast(error, 5000);
           });
       }
     },
@@ -145,7 +158,7 @@ export default {
           this.showToast(response.data.data, 2000);
         })
         .catch(error => {
-          console.log(error);
+          this.showToast(error, 5000);
         });
     },
     telephoneverification(tel) {
@@ -180,6 +193,9 @@ export default {
     telephonenum() {
       return this.$store.state.telephonenum;
     }
+  },
+  mounted() {
+    this.telephone = this.telephonenum;
   }
 };
 </script>
@@ -299,11 +315,18 @@ input {
   width: 80%;
   border: 0.5px red solid;
   background-color: rgb(233, 134, 134);
+  color: #e6e6e6;
   margin-right: auto;
   margin-left: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
-.error > b {
-  margin-right: auto;
-  margin-left: auto;
+.warning {
+  width: 50px;
+  height: 50px;
+}
+.errortext {
+  margin-left: 20px;
 }
 </style>

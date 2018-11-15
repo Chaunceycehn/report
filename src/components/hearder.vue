@@ -6,14 +6,21 @@
         <div>{{selectedcityname}}</div>
       </div>
       <div class="title">影像报告查询</div>
+      <!-- <div class="quitbox">
+        <img src="@/assets/退出.png" class="quit">
+      </div>-->
     </div>
     <transition name="fade">
       <div class="city" id="city" v-if="show">
         <select v-model="prov">
-          <option v-for="option in arr" :value="option.name">{{ option.name }}</option>
+          <option v-for="(option,index) in arr" :key="index" :value="option.name">{{ option.name }}</option>
         </select>
         <select v-model="city">
-          <option v-for="option in cityArr" :value="option.name">{{ option.name }}</option>
+          <option
+            v-for="(option,index) in cityArr"
+            :key="index"
+            :value="option.name"
+          >{{ option.name }}</option>
         </select>
       </div>
     </transition>
@@ -104,7 +111,6 @@ export default {
         }
       }
       this.city = this.cityArr[0].name;
-      
     },
     updateDistrict: function() {
       if (this.show === true) {
@@ -113,7 +119,6 @@ export default {
     },
     selectcity: function() {
       this.$store.commit("selectcity", this.city);
-      
     }
   },
   beforeMount: function() {
@@ -172,6 +177,17 @@ export default {
   width: 1.5em;
   height: 1.5em;
 }
+/* .quit {
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+} */
+.quitbox {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 .dwbox div {
   float: left;
   font-size: 0.9rem;
@@ -184,7 +200,10 @@ export default {
   display: flex;
   justify-content: space-around;
 }
-
+.title {
+  font-size: 20px;
+  font-family: "黑体";
+}
 select {
   margin: 0 10px;
   font-family: "微软雅黑";

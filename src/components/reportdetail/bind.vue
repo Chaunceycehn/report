@@ -9,7 +9,7 @@
               <td class="r1 sub_title">&nbsp;&nbsp; 检查时间:{{report.reportdate}}</td>
             </tr>
             <tr>
-              <td class="fl sub_title">&nbsp;&nbsp; 检查设备:</td>
+              <td class="fl sub_title">&nbsp;&nbsp; 检查设备:{{report.Modality}}</td>
               <td class="r2 sub_title">&nbsp;&nbsp; 检查部位:{{report.Dengjipart}}</td>
             </tr>
             <tr>
@@ -60,7 +60,7 @@ export default {
     this.renderreport();
   },
   mounted() {
-    console.log(this.report);
+    // console.log(this.report);
   }
 };
 </script>

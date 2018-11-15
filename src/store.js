@@ -9,7 +9,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         // 放置初始状态 app启动的时候的全局的初始值
-        selectedcityname: '地区',
+        selectedcityname: '温州',
         starttime: '',
         endtime: '',
         telephonenum: '',

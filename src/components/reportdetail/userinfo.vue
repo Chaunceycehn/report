@@ -48,7 +48,7 @@ export default {
     this.renderreport();
   },
   mounted(){
-      console.log(this.report)
+      // console.log(this.report)
   }
 };
 </script>

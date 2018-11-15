@@ -13,7 +13,11 @@
         </div>
       </router-link>
     </ul>-->
-    <div class="lists">
+    <div class="noreprot" v-if="lists.length==0">
+      <img src="@/assets/为空.png" alt="" class="weikong">
+      <p>暂无影像报告，请点击立即查询</p>
+    </div>
+    <div class="lists" v-if="lists.length">
       <ul>
         <li
           class="list"
@@ -21,12 +25,12 @@
           :key="index"
           @click="gotodetail(list.AccessNo)"
         >
-          <div class="first" v-bind:style="{'background-color':setStyle}"></div>
+          <div class="first" v-bind:style="{'background-color':setStyle(index)}"></div>
           <div class="middle">
             <span class="hospital">{{list.Hospital_Name}}</span>
             <div class="subtitle">
-              <span class="Dengjipart">部位：{{list.Dengjipart}}</span>
-              <span class="reportend">报告内容：{{list.reportend}}</span>
+              <span class="Name">患者姓名：{{list.Name}}</span>
+              <span class="ModCheckDate">检查日期：{{list.ModCheckDate | timecut}}</span>
             </div>
           </div>
           <div class="end">
@@ -53,9 +57,22 @@ export default {
       ]
     };
   },
+  filters: {
+    timecut: function(value) {
+      if (!value) return "";
+      value = value.split(" ");
+      return value[0];
+    }
+  },
   methods: {
     renderlist() {
       this.lists = this.reportdata;
+    },
+    setStyle: function(el) {
+      if (el > 6) {
+        el = el / 6;
+      }
+      return this.colors[Math.floor(Math.random() * (6 - el))];
     },
     gotodetail(accessno) {
       this.$http({
@@ -68,24 +85,19 @@ export default {
         })
       })
         .then(response => {
-          console.log(accessno);
-          console.log(response.data.data[0]);
+          // console.log(accessno);
+          // console.log(response.data.data[0]);
           this.$store.commit("getreportdetail", response.data.data[0]);
           this.$router.push({ path: "/reportdetail" });
         })
         .catch(error => {
           this.showToast(error);
         });
-
-      
     }
   },
   computed: {
     reportdata() {
       return this.$store.state.allreport;
-    },
-    setStyle: function() {
-      return this.colors[Math.floor(Math.random() * 6)];
     }
   },
   beforeMount() {
@@ -95,6 +107,10 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  font-size: 20px;
+  font-family: "黑体"
+}
 .headbox {
   display: flex;
   justify-content: center;
@@ -134,6 +150,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-grow: 1;
 }
 
 .end {
@@ -158,12 +175,17 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
   margin-left: 20px;
-  font-size: 15px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .Dengjipart {
   margin-right: 20px;
 }
-
+.weikong {
+  width: 30px;
+}
 .lists:last-child {
   margin-bottom: 40px;
 }
@@ -172,5 +194,18 @@ export default {
 }
 .lists:active {
   background-color: #e7e6e6;
+}
+.noreprot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 10px;
+  color: #969696;
 }
 </style>
