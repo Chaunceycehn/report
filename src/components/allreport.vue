@@ -91,14 +91,21 @@ export default {
           this.$router.push({ path: "/reportdetail" });
         })
         .catch(error => {
-          this.showToast(error);
+          this.showToast(error.data);
         });
     }
   },
   computed: {
     reportdata() {
+      let localData = JSON.parse( window.localStorage.getItem("allreport"));
+      if (!this.$store.allreport && localData) {
+        this.$store.commit("getmyreport", localData); //同步操作
+      }
       return this.$store.state.allreport;
     }
+  },
+  created() {
+    this.renderlist();
   },
   beforeMount() {
     this.renderlist();
@@ -109,7 +116,7 @@ export default {
 <style scoped>
 .title {
   font-size: 20px;
-  font-family: "黑体"
+  font-family: "黑体";
 }
 .headbox {
   display: flex;
@@ -128,8 +135,14 @@ export default {
 .tab_box {
   display: block;
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-
+.lists {
+  width: 100%;
+}
 .list {
   display: flex;
   flex-direction: row;
@@ -186,13 +199,20 @@ export default {
 .weikong {
   width: 30px;
 }
-.lists:last-child {
+.lists {
+  margin-right: auto;
+  margin-left: auto;
+}
+.list {
+  cursor: pointer;
+}
+.list:last-child {
   margin-bottom: 40px;
 }
-.lists:hover {
+.list:hover {
   background-color: #e7e6e6;
 }
-.lists:active {
+.list:active {
   background-color: #e7e6e6;
 }
 .noreprot {

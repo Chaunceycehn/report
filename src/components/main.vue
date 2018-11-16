@@ -39,12 +39,12 @@
 
 <script>
 import datepicker from "@/components/datepicker.vue";
-
 export default {
   name: "HelloWorld",
   components: {
     datepicker
   },
+
   data() {
     return {
       show: true,
@@ -134,7 +134,14 @@ export default {
             // for (let i = 0; i < arry.length - 1; i++) {
             //   console.log(JSON.parse(arry[i]));
             // }
-            this.$router.push({ path: "/myreport" });
+            
+            if (response.data.success === "false") {
+              this.showToast(response.data.data, 2000);
+            } else if (response.data.data.length === 0) {
+              this.showToast("没有找到影像", 2000);
+            } else if (response.data.success === "true") {
+              this.$router.push({ path: "/myreport" });
+            }
           })
           .catch(error => {
             this.showToast(error, 5000);
@@ -175,27 +182,46 @@ export default {
     }
   },
   computed: {
+    selectedcityname() {
+      let localData = window.localStorage.getItem("selectedcityname");
+      if (!this.$store.selectedcityname && localData) {
+        this.$store.commit("selectcity", localData); //同步操作
+      }
+      return this.$store.state.selectedcityname;
+    },
     starttime() {
+      let localData = window.localStorage.getItem("starttime");
+      if (!this.$store.starttime && localData) {
+        this.$store.commit("selectstarttime", localData); //同步操作
+      }
       return this.$store.state.starttime.split("-").join("/");
     },
     endtime() {
+      let localData = window.localStorage.getItem("endtime");
+      if (!this.$store.endtime && localData) {
+        this.$store.commit("selectendtime", localData); //同步操作
+      }
       return this.$store.state.endtime.split("-").join("/");
     },
-    selectedcityname() {
-      return this.$store.state.selectedcityname;
-    },
-    templetime() {
-      return this.$store.state.starttime.split("-").join("");
-    },
     allreport() {
+      // let localData = window.localStorage.getItem("allreport");
+      // if (!this.$store.allreport && localData) {
+      //   this.$store.commit("getmyreport", localData); //同步操作
+      // }
       return this.$store.state.allreport;
     },
     telephonenum() {
+      let localData = window.localStorage.getItem("telephonenum");
+      if (!this.$store.telephonenum && localData) {
+        this.$store.commit("gettelephonenum", localData); //同步操作
+      }
       return this.$store.state.telephonenum;
     }
   },
   mounted() {
     this.telephone = this.telephonenum;
+    // console.log("this.starttime");
+    // console.log(this.starttime);
   }
 };
 </script>

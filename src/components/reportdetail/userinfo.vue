@@ -1,29 +1,25 @@
 <template>
-    <div class="personal_info of">
-        <div class="fl personal_head" id="img_id">
-            <img
-                src="http://kyapp.webris.cn/KyDemo/images/patient_girl.png"
-                width="72px"
-                height="72px"
-            >
-        </div>
-        <div class="fr personal_info_detail">
-            <div class="of pinfo_div">
-                <span class="fl">{{report.Name}}</span>
-                <span class="fl if_female">
-                    <img
-                        class="img-circle"
-                        id="img_female"
-                        src="http://kyapp.webris.cn/KyDemo/images/girl.png"
-                        width="12px"
-                    >
-                </span>
-                <span class="fl age">{{report.Age}}</span>
-            </div>
-            <div class="of font_size15">联系电话：{{report.Telephone}}</div>
-            <div class="of font_size15">家庭住址：{{report.Address}}</div>
-        </div>
+  <div class="personal_info of">
+    <div class="fl personal_head" id="img_id">
+      <img src="http://kyapp.webris.cn/KyDemo/images/patient_girl.png" width="72px" height="72px">
     </div>
+    <div class="fr personal_info_detail">
+      <div class="of pinfo_div">
+        <span class="fl">{{report.Name}}</span>
+        <span class="fl if_female">
+          <img
+            class="img-circle"
+            id="img_female"
+            src="http://kyapp.webris.cn/KyDemo/images/girl.png"
+            width="12px"
+          >
+        </span>
+        <span class="fl age">{{report.Age}}</span>
+      </div>
+      <div class="of font_size15">联系电话：{{report.Telephone}}</div>
+      <div class="of font_size15">家庭住址：{{report.Address}}</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -41,14 +37,18 @@ export default {
   },
   computed: {
     reportdetail() {
+      let localData = JSON.parse(window.localStorage.getItem("reportdetail"));
+      if (!this.$store.reportdetail && localData) {
+        this.$store.commit("getreportdetail", localData); //同步操作
+      }
       return this.$store.state.reportdetail;
     }
   },
   beforeMount() {
     this.renderreport();
   },
-  mounted(){
-      // console.log(this.report)
+  mounted() {
+    // console.log(this.report)
   }
 };
 </script>

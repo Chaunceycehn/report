@@ -1,22 +1,16 @@
 <template>
   <div class="bind">
-    <section class="bind_li">
-      <div class="of info_div_1">
-        <table class="tb_class fl">
-          <tbody>
-            <tr>
-              <td class="fl sub_title">&nbsp;&nbsp; 影像号码:{{report.AccessNo}}</td>
-              <td class="r1 sub_title">&nbsp;&nbsp; 检查时间:{{report.reportdate}}</td>
-            </tr>
-            <tr>
-              <td class="fl sub_title">&nbsp;&nbsp; 检查设备:{{report.Modality}}</td>
-              <td class="r2 sub_title">&nbsp;&nbsp; 检查部位:{{report.Dengjipart}}</td>
-            </tr>
-            <tr>
-              <td class="sub_title" colspan="2">&nbsp;&nbsp; 检查医院:{{report.Hospital_Name}}</td>
-            </tr>
-          </tbody>
-        </table>
+    <section>
+      <div class="bind_li">
+        <ul class="liclomn">
+          <ul class="lirow">
+            <li class="sub_title lirow_l">&nbsp;&nbsp; 影像号码:{{report.AccessNo}}</li>
+            <li class="sub_title lirow_l">&nbsp;&nbsp; 检查设备:{{report.Modality}}</li>
+          </ul>
+          <li class="sub_title">&nbsp;&nbsp; 检查时间:{{report.reportdate}}</li>
+          <li class="sub_title Dengjipart">&nbsp;&nbsp; 检查部位:{{report.Dengjipart}}</li>
+          <li class="sub_title">&nbsp;&nbsp; 检查医院:{{report.Hospital_Name}}</li>
+        </ul>
       </div>
     </section>
     <section class="bind_li">
@@ -53,6 +47,10 @@ export default {
   },
   computed: {
     reportdetail() {
+      let localData = JSON.parse(window.localStorage.getItem("reportdetail"));
+      if (!this.$store.reportdetail && localData) {
+        this.$store.commit("getreportdetail", localData); //同步操作
+      }
       return this.$store.state.reportdetail;
     }
   },
@@ -78,26 +76,27 @@ export default {
   margin-bottom: 10px;
   margin-top: 10px;
 }
-.tb_class{
-font-size: 0.7rem;
-}
-tr {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .sub_title {
   background: url(http://kyapp.webris.cn/KyDemo/images/result_li.png) no-repeat
     left center;
+
+  margin: 5px 20px;
 }
-.r1 {
-  position: absolute;
-  left: 50%;
+.lirow_l {
+  margin-top: 5px;
+  margin-bottom: 0px;
 }
-.r2 {
-  position: absolute;
-  left: 50%;
+.Dengjipart {
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lirow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .title {
   margin: 10px 0px;
