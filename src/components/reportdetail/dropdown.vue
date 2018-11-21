@@ -45,5 +45,8 @@ export default {
 }
 
 .dropdown-content {
+    padding: 10px;
+  color: #333;
+  line-height: 24px;
 }
 </style>

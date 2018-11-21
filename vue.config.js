@@ -1,7 +1,7 @@
 // vue.config.js 配置说明
 // 这里只列一部分，具体配置惨考文档啊
 module.exports = {
-    // baseUrl  type:{string} default:'/'
+    baseUrl:'',
     // 将部署应用程序的基本URL
     // 将部署应用程序的基本URL。
     // 默认情况下，Vue CLI假设您的应用程序将部署在域的根目录下。

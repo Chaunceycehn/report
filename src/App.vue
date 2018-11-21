@@ -4,6 +4,7 @@
     <nav class="tab">
       <router-link class="tab_btn selected" to="/">查询影像</router-link>
       <router-link class="tab_btn" to="/myreport">我的影像/报告</router-link>
+    
     </nav>
   </div>
 </template>
@@ -17,6 +18,7 @@ export default {
 
 
 <style>
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -74,6 +76,12 @@ li {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+.el-loading-spinner .path{
+  stroke: #41b883;
+}
+.el-loading-spinner .el-loading-text {
+  color: #41b883;
 }
 input{height: 50px;}
 </style>

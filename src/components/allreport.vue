@@ -3,16 +3,6 @@
     <div class="headbox">
       <div class="title">我的影像/报告</div>
     </div>
-    <!-- <ul class="MyReport">
-      <router-link to="/reportdetail" tag="li">
-        <img src="@/assets/ct.png" alt="">
-        <div>
-          <span>平阳县人民医院</span>
-          <span>扫描部位：颅脑平扫,颔面部平</span>
-          <span>检查日期: 2018-02-19</span>
-        </div>
-      </router-link>
-    </ul>-->
     <div class="noreprot" v-if="lists.length==0">
       <img src="@/assets/为空.png" alt="" class="weikong">
       <p>暂无影像报告，请点击立即查询</p>
@@ -25,7 +15,7 @@
           :key="index"
           @click="gotodetail(list.AccessNo)"
         >
-          <div class="first" v-bind:style="{'background-color':setStyle(index)}"></div>
+          <div class="first" v-bind:style="{'background-color':'#41b883'}"></div>
           <div class="middle">
             <span class="hospital">{{list.Hospital_Name}}</span>
             <div class="subtitle">
@@ -114,6 +104,7 @@ export default {
 </script>
 
 <style scoped>
+
 .title {
   font-size: 20px;
   font-family: "黑体";
@@ -133,7 +124,6 @@ export default {
 }
 
 .tab_box {
-  display: block;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -141,7 +131,7 @@ export default {
   flex-direction: column;
 }
 .lists {
-  width: 100%;
+  width: 95%;
 }
 .list {
   display: flex;
@@ -150,7 +140,7 @@ export default {
   justify-content: space-between;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  border-radius: 11px;
+  border-radius: 10px;
 }
 .first {
   height: 70px;
@@ -188,7 +178,7 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
   margin-left: 20px;
-  font-size: 14px;
+  font-size: 13px;
   display: flex;
   justify-content: space-around;
   align-items: center;

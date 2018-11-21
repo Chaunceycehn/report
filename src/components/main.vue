@@ -144,7 +144,7 @@ export default {
             }
           })
           .catch(error => {
-            this.showToast(error, 5000);
+            this.showToast(`连接失败${error}`, 5000);
           });
       }
     },
@@ -165,7 +165,7 @@ export default {
           this.showToast(response.data.data, 2000);
         })
         .catch(error => {
-          this.showToast(error, 5000);
+          this.showToast(`连接失败${error}`, 5000);
         });
     },
     telephoneverification(tel) {
