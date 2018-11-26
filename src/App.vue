@@ -1,24 +1,17 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <router-view class="page"></router-view>
-    <nav class="tab">
-      <router-link class="tab_btn selected" to="/">查询影像</router-link>
-      <router-link class="tab_btn" to="/myreport">我的影像/报告</router-link>
-    
-    </nav>
+
   </div>
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 
 
 <style>
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -26,6 +19,11 @@ export default {
 }
 html {
   font-size: 100%;
+  max-width: 600px;
+  margin-right: auto;
+  margin-left: auto;
+  background: #fafafa;
+  box-shadow: #e5e5e5 0px 0px 5px 1px;
 }
 body {
   background-color: #f8f8f8;
@@ -34,12 +32,16 @@ body {
 li {
   list-style: none;
 }
+.app {
+  
+}
 
 .tab {
   position: fixed;
   bottom: 0;
   background-color: white;
-  width: 100vw;
+  max-width: 600px;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   border-top: 0.5px solid #ddd;
@@ -61,27 +63,29 @@ li {
 .tab-content-list {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
   align-items: center;
 }
 
 .router-link-exact-active {
-  color: #41b883;
+  color: #06c193;
 }
 .router-link-exact-active::after {
   content: "";
   height: 2px;
   width: 100%;
-  background: #41b883;
+    background: linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
   position: absolute;
   bottom: 0;
   left: 0;
 }
-.el-loading-spinner .path{
-  stroke: #41b883;
+.el-loading-spinner .path {
+  stroke: #06c193;
 }
 .el-loading-spinner .el-loading-text {
-  color: #41b883;
+  color: #06c193;
 }
-input{height: 50px;}
+input {
+  height: 50px;
+}
 </style>

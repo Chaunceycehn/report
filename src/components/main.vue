@@ -231,14 +231,14 @@ export default {
 .tab_box {
   padding-bottom: 5px;
   display: block;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 .patientinput {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
 }
 .patientinput li {
   display: flex;
@@ -256,7 +256,7 @@ export default {
   position: absolute;
 }
 .btn {
-  width: 25vw;
+  width: 25%;
   text-align: center;
   display: inline-block;
   position: absolute;
@@ -281,7 +281,7 @@ export default {
   background: #b1b1b1;
 }
 .dactive {
-  width: 25vw;
+  width: 25%;
   text-align: center;
   display: inline-block;
   position: absolute;
@@ -301,7 +301,7 @@ input {
   background: none;
   outline: none;
   border: 0px;
-  width: 70vw;
+  width: 70%;
 }
 input:focus {
   outline: none;
@@ -316,9 +316,9 @@ input {
 }
 .Advisory {
   font-size: 14px;
-  width: 80vw;
+  width: 80%;
   padding: 10px;
-  background-color: #41b883;
+  background:linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
   color: white;
   display: flex;
   justify-content: center;
@@ -327,10 +327,10 @@ input {
   margin-top: 20px;
 }
 .Advisory:hover {
-  background: #18836a;
+  background: #06c193;
 }
 .Advisory:active {
-  background: #18836a;
+  background: #06c193;
 }
 .getreport {
   margin: 20px 0;

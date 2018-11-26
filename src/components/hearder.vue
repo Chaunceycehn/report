@@ -158,17 +158,18 @@ export default {
 }
 .headbox {
   z-index: 999;
-  background: #41b883;
+  background:linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
   width: 100%;
   height: 50px;
   color: white;
   font-size: 16px;
+  position: relative;
 }
 .dwbox {
   width: 30%;
   display: inline-block;
   position: absolute;
-  left: 1%;
+  left: 2%;
   z-index: 5;
 }
 .dwicon {
@@ -194,8 +195,8 @@ export default {
   margin-top: 10px;
 }
 .city {
-  background: #41b883;
-  width: 100vw;
+  background: linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));;
+  width: 100%;
   padding: 10px 0;
   display: flex;
   justify-content: space-around;
@@ -216,7 +217,7 @@ select {
 }
 option {
   color: white;
-  background: #41b883;
+  background: #00be9c;
   line-height: 20px;
 }
 select:focus {

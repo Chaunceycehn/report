@@ -2,7 +2,7 @@
   <div id="reportdetail">
     <userinfo></userinfo>
     <bind></bind>
-    <Relatedactions></Relatedactions>
+    <!-- <Relatedactions></Relatedactions> -->
     <dropdown></dropdown>
     <dropdown1></dropdown1>
   </div>
@@ -11,7 +11,7 @@
 <script>
 import userinfo from "@/components/reportdetail/userinfo";
 import bind from "@/components/reportdetail/bind";
-import Relatedactions from "@/components/reportdetail/Relatedactions";
+// import Relatedactions from "@/components/reportdetail/Relatedactions";
 import dropdown from "@/components/reportdetail/dropdown";
 import dropdown1 from "@/components/reportdetail/dropdown1";
 
@@ -20,7 +20,7 @@ export default {
   components: {
     bind,
     userinfo,
-    Relatedactions,
+    // Relatedactions,
     dropdown,
     dropdown1,
   }
@@ -48,7 +48,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-html,
 body,
 dl,
 dt,

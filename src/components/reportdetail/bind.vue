@@ -1,6 +1,6 @@
 <template>
   <div class="bind">
-    <section>
+    <!-- <section>
       <div class="bind_li">
         <ul class="liclomn">
           <ul class="lirow">
@@ -28,6 +28,46 @@
       </div>
       <p id="P2">{{report.reportend}}</p>
       <div class="clear"></div>
+    </section>-->
+    <section class="contentbox">
+      <div class="of info_div_1">
+        <table class="tb_class fl">
+          <tbody>
+            <tr>
+              <td class="fl sub_title l_txt">&nbsp;&nbsp; 影像号码:{{report.AccessNo}}</td>
+              <td class="sub_title l_txt">&nbsp;&nbsp; 检查时间:{{report.reportdate | cuttime}}</td>
+            </tr>
+            <tr>
+              <td class="fl sub_title l_txt">&nbsp;&nbsp; 检查设备:{{report.Modality}}</td>
+              <td class="sub_title l_txt">&nbsp;&nbsp; 检查部位:{{report.Dengjipart}}</td>
+            </tr>
+            <tr>
+              <td class="sub_title" colspan="2">&nbsp;&nbsp; 检查医院:{{report.Hospital_Name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <section class="bind_li">
+        <div class="fl main_shu"></div>
+        <h2>影像所见：</h2>
+        <pre id="P1">{{report.reportinfo}}</pre>
+        <div class="clear"></div>
+      </section>
+      <section class="bind_li">
+        <div class="fl main_shu"></div>
+        <h2>诊断结果：</h2>
+        <pre id="P2">{{report.reportend}}</pre>
+        <div class="clear"></div>
+      </section>
+      <section class="my_nav">
+        <a >调阅图像</a>
+        <a >图像下载</a>
+        <a >一键分享</a>
+      </section>
+      <section class="od_tip">
+        <pre><span class="tit_new">温馨提示：建议在WiFi环境下调阅图像！</span>
+                            </pre>
+      </section>
     </section>
   </div>
 </template>
@@ -59,65 +99,145 @@ export default {
   },
   mounted() {
     // console.log(this.report);
+  },
+  filters: {
+    cuttime: function(value) {
+      if (!value) return "";
+      let v = value.split(' ');
+      return v[0]
+    }
   }
 };
 </script>
 
 <style scoped>
+.contentbox {
+  border: 1px solid #d3d3d3;
+  background: #fff;
+  margin: 0 0 0.7em 0;
+  padding: 0.3em 0.5em 0.6em 0.5em;
+  border-bottom-right-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
+  position: relative;
+  color: #717675;
+  z-index: 1;
+}
+.tb_class {
+  width: 100%;
+  margin-bottom: 5px;
+}
 .info_div_1 {
-  padding: 10px;
-  font-size: 13px;
-  color: #333;
+  color: #666;
   line-height: 24px;
 }
-.bind_li {
-  border-bottom: 1px solid #e4e4e4;
-  border-top: 1px solid #e4e4e4;
-  margin-bottom: 10px;
-  margin-top: 10px;
+.od_tip {
+  border-radius: 5px;
+  background: #fff;
+  margin-top: 0.6em;
+  font-size: 0.9em;
+  line-height: 1.8em;
 }
 
+.od_tip .tit_new {
+  color: red;
+  padding-left: 1em;
+  background: url(../../assets/result_li.png) no-repeat left center;
+  background-size: auto 300%;
+}
 .sub_title {
-  background: url(http://kyapp.webris.cn/KyDemo/images/result_li.png) no-repeat
-    left center;
-
-  margin: 5px 20px;
-}
-.lirow_l {
-  margin-top: 5px;
-  margin-bottom: 0px;
-}
-.Dengjipart {
-  width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 13px;
+  color: #333;
+  background: url(../../assets/result_li.png) no-repeat left center;
+  overflow: auto;
   white-space: nowrap;
 }
-.lirow {
+
+.bind_li {
+  border: 1px solid #d3d3d3;
+  background: #fff;
+  margin: 0 0 0.7em 0;
+  /*padding: 0.3em 0.9em 0.6em 0.9em;*/
+  border-radius: 0.3em;
+  position: relative;
+  color: #717675;
+}
+
+.bind_li h2 {
+  height: 2.5em;
+  line-height: 2em;
+  font-size: 1.2em;
+  color: #2d2d2d;
+  border-bottom: 1px dashed #d3d3d3;
+  padding: 0.3em 0.9em 0.6em 0.9em;
+}
+
+.bind_li pre {
+  font-size: 0.9em;
+  line-height: 1.6em;
+  padding-top: 0.4em;
+  padding: 0.3em 0.9em 0.6em 0.9em;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.bind_li textarea {
+  font-size: 0.9em;
+  height: 6em;
+  width: auto;
+  border: 0;
+  resize: vertical;
+  outline-color: #1ef60e;
+  -webkit-appearance: none;
+  /*padding: 1em;*/
+  background: none;
+}
+
+.main_shu {
+  width: 1px;
+  border: 1.5px solid #00d2c7;
+  height: 18px;
+  /* border-radius: 2px; */
+  margin-top: 6px;
+  height: 1.6em;
+}
+div.clear {
+  font: 0px Arial;
+  line-height: 0;
+  height: 0;
+  overflow: hidden;
+  clear: both;
+}
+
+.my_nav {
+  height: 2.5em;
+  line-height: 2.5em;
+  margin: 1em 0 1em 0;
+  clear: both;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
 }
-.title {
-  margin: 10px 0px;
+
+.my_nav a {
+  display: inline-block;
+  height: 2.5em;
+  line-height: 2.5em;
+  width: 25%;
+  text-align: center;
+  background: linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
+  margin: 0 2%;
+  color: #fff;
+  border-radius: 1.25em;
+  text-decoration: none;
 }
-.li_ico1 {
-  margin-right: 10px;
+
+.my_nav a:active {
+  background: #06c193;
 }
-h2 {
-  font-size: 16px;
-  font-weight: bold;
-}
-#P1 {
-  padding: 10px;
-  font-size: 13px;
-  color: #333;
-  line-height: 24px;
-}
-#P2 {
-  padding: 10px;
-  font-size: 13px;
-  color: #333;
-  line-height: 24px;
+
+.my_nav .short {
+  width: 22%;
 }
 </style>

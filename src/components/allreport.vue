@@ -15,16 +15,21 @@
           :key="index"
           @click="gotodetail(list.AccessNo)"
         >
-          <div class="first" v-bind:style="{'background-color':'#41b883'}"></div>
-          <div class="middle">
-            <span class="hospital">{{list.Hospital_Name}}</span>
-            <div class="subtitle">
-              <span class="Name">患者姓名：{{list.Name}}</span>
-              <span class="ModCheckDate">检查日期：{{list.ModCheckDate | timecut}}</span>
-            </div>
+          <div class="first">
+            <img src="@/assets/影像.png" alt="" class="weikong">
           </div>
-          <div class="end">
-            <img src="@/assets/箭头.png">
+          <div class="middle">
+            <span class="hospital Dengjipart">{{list.Dengjipart}}</span>
+            <div class="subtitlecontain">
+              <div class="subtitle">
+                <span class="Modality">检查设备：{{list.Modality}}</span>
+                <span class="Name">{{list.Hospital_Name}}</span>
+              </div>
+              <div class="subtitle">
+                <span class="Pat_Type">检查类型：{{list.Pat_Type}}</span>
+                <span class="ModCheckDate">检查日期：{{list.ModCheckDate | timecut}}</span>
+              </div>
+            </div>
           </div>
         </li>
       </ul>
@@ -75,8 +80,6 @@ export default {
         })
       })
         .then(response => {
-          // console.log(accessno);
-          // console.log(response.data.data[0]);
           this.$store.commit("getreportdetail", response.data.data[0]);
           this.$router.push({ path: "/reportdetail" });
         })
@@ -87,7 +90,7 @@ export default {
   },
   computed: {
     reportdata() {
-      let localData = JSON.parse( window.localStorage.getItem("allreport"));
+      let localData = JSON.parse(window.localStorage.getItem("allreport"));
       if (!this.$store.allreport && localData) {
         this.$store.commit("getmyreport", localData); //同步操作
       }
@@ -104,7 +107,6 @@ export default {
 </script>
 
 <style scoped>
-
 .title {
   font-size: 20px;
   font-family: "黑体";
@@ -116,7 +118,7 @@ export default {
 }
 .headbox {
   z-index: 999;
-  background: #41b883;
+  background: linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
   width: 100%;
   height: 50px;
   color: white;
@@ -124,7 +126,7 @@ export default {
 }
 
 .tab_box {
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,15 +140,11 @@ export default {
   flex-direction: row;
   margin: 10px 0;
   justify-content: space-between;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  border-radius: 10px;
+  border-bottom: 1px solid #c5c2c2;
 }
 .first {
-  height: 70px;
-  width: 10px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .middle {
@@ -156,32 +154,26 @@ export default {
   flex-grow: 1;
 }
 
-.end {
-  height: 70px;
-  width: 40px;
-  background-color: #41b883;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.end > img {
-  height: 30px;
-}
 .hospital {
   font-size: 20px;
   font-weight: bold;
   margin-left: 20px;
 }
+.subtitlecontain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  color: #807d7d;
+}
 .subtitle {
-  margin-top: 5px;
-  margin-bottom: 5px;
   margin-left: 20px;
   font-size: 13px;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
 }
 .Dengjipart {
   margin-right: 20px;
@@ -217,5 +209,11 @@ export default {
   flex-direction: column;
   font-size: 10px;
   color: #969696;
+}
+.Dengjipart {
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

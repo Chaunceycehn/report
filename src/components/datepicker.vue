@@ -241,12 +241,15 @@ export default {
 };
 </script>
 <style scoped>
+.date-picker{
+  width: 70%;
+}
 .targetContainer1 {
   padding-left: 10px;
   background: none;
   outline: none;
   border: 0px;
-  width: 70vw;
+  width: 100%;
   font-size: 1rem;
   height: 2.5rem;
   border-radius: 4px;
@@ -278,7 +281,7 @@ export default {
 }
 .year-list {
   height: 200px;
-  width: 70vw;
+  width: 100%;
 }
 .year-list .selected {
   background: #2d8cf0;
@@ -310,7 +313,7 @@ export default {
 }
 
 .date-panel {
-  width: 70vw;
+  width: 70%;
   box-shadow: 0 0 8px #ccc;
   background: #fff;
   position: absolute;
@@ -322,7 +325,7 @@ ul {
   margin: 0;
 }
 .date-list {
-  width: 70vw;
+  width: 100%;
   text-align: center;
   height: 200px;
   overflow: hidden;
@@ -357,7 +360,7 @@ input {
   background: none;
   outline: none;
   border: 0px;
-  width: 70vw;
+  width: 100%;
   font-size: 1rem;
   height: 2.5rem;
   border-radius: 4px;
