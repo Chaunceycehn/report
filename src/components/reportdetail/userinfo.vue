@@ -1,20 +1,12 @@
 <template>
   <div class="personal_info of">
     <div class="fl personal_head" id="img_id">
-      <img src="http://kyapp.webris.cn/KyDemo/images/patient_girl.png" width="72px" height="72px">
+      <img src="../../assets/patient_girl.png" width="72px" height="72px">
     </div>
+    <img src="../../assets/左.png" class="left" @click="left">
     <div class="fl personal_info_detail">
       <div class="of pinfo_div">
-        <span class="fl">{{report.Name}}</span>
-        <span class="fl if_female">
-          <img
-            class="img-circle"
-            id="img_female"
-            src="http://kyapp.webris.cn/KyDemo/images/girl.png"
-            width="12px"
-          >
-        </span>
-        <span class="fl age">{{report.Age}}</span>
+        {{report.Name}}&nbsp;&nbsp;<img class="img-circle" id="img_female" src="../../assets/girl.png">&nbsp;&nbsp;{{report.Age}}
       </div>
       <div class="of font_size15">联系电话：{{report.Telephone}}</div>
       <div class="of font_size15">家庭住址：{{report.Address}}</div>
@@ -33,6 +25,9 @@ export default {
   methods: {
     renderreport() {
       this.report = this.reportdetail;
+    },
+    left() {
+      this.$router.push({ path: "/myreport" });
     }
   },
   computed: {
@@ -55,7 +50,18 @@ export default {
 
 
 <style scoped>
+.img-circle {
+  vertical-align: middle;
+  width: 15px;
+}
+.left {
+  position: absolute;
+  width: 20px;
+  left: 10px;
+  top: 10px;
+}
 .personal_info {
+  position: relative;
   font-size: 14px;
   background: #00d2c7;
   width: 100%;
@@ -67,11 +73,11 @@ export default {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-
+  margin-left: 10px;
 }
 .personal_info_detail {
   margin-top: 3px;
-  margin-left: 15px;
+  margin-left: 5px;
   width: 69%;
 }
 .personal_info_detail > div:nth-child(1) {
@@ -85,11 +91,11 @@ export default {
 .age {
   margin: 2px 0px;
 }
-.personal_info_detail > div:nth-child(2)  {
+.personal_info_detail > div:nth-child(2) {
   font-size: 15px;
   margin-bottom: 8px;
 }
-.personal_info_detail > div:nth-child(3)  {
+.personal_info_detail > div:nth-child(3) {
   font-size: 15px;
 }
 </style>

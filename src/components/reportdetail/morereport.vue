@@ -3,25 +3,13 @@
     <div class="of info_div zk" @click="clickfuntion">
       <div class="fl main_shu"></div>
       <div class="fl main_title">
-        <span>存为个人档案</span>
+        <span>相关检查</span>
       </div>
       <div class="fr look_all">
-        <img src="../../assets/zk.png" :class="{img2:true,rotate:(show)}">
+        <span>查看全部</span>
+        <img src="../../assets/zk.png" :class="{img2:true,rotate:true}">
       </div>
     </div>
-    <transition name="fade">
-      <div v-if="show" id="myDropdown" class="box_content">
-        <div class="text1">
-          报告里的词都看不懂？
-          想知道报告说的病情严不严重？
-          ——仅需10元，为您解读报告，帮您了解病情
-          √ 快速回电√ 讲解清楚报告词汇与内容
-        </div>
-        <div class="btnbox2">
-          <button class="btn2">点击发起</button>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -44,22 +32,9 @@ export default {
 </script>
 
 <style scoped>
-.fade-enter-active {
-  animation: bounce-in 1s;
-}
 
-@keyframes bounce-in {
-  0% {
-    transform: translateY(-30px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 .rotate {
-  transform: rotate(180deg);
+  transform: rotate(-90deg);
 }
 .dropdown {
   border: 1px solid #d3d3d3;

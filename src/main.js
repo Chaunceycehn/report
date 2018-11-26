@@ -6,6 +6,7 @@ import axios from 'axios'
 import qs from 'qs'
 import toastRegistry from './components/toast/index'
 import {Loading} from 'element-ui';
+
 Vue.use(toastRegistry)
 Vue.use(Loading)
 

@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="app">
     <router-view class="page"></router-view>
-
   </div>
 </template>
 
@@ -31,9 +30,6 @@ body {
 }
 li {
   list-style: none;
-}
-.app {
-  
 }
 
 .tab {
@@ -74,7 +70,7 @@ li {
   content: "";
   height: 2px;
   width: 100%;
-    background: linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
+  background: linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
   position: absolute;
   bottom: 0;
   left: 0;

@@ -60,13 +60,14 @@
         <div class="clear"></div>
       </section>
       <section class="my_nav">
-        <a >调阅图像</a>
-        <a >图像下载</a>
-        <a >一键分享</a>
+        <a>调阅图像</a>
+        <a>图像下载</a>
+        <a>一键分享</a>
       </section>
       <section class="od_tip">
-        <pre><span class="tit_new">温馨提示：建议在WiFi环境下调阅图像！</span>
-                            </pre>
+        <pre>
+          <span class="tit_new">温馨提示：建议在WiFi环境下调阅图像！</span>
+        </pre>
       </section>
     </section>
   </div>
@@ -103,8 +104,8 @@ export default {
   filters: {
     cuttime: function(value) {
       if (!value) return "";
-      let v = value.split(' ');
-      return v[0]
+      let v = value.split(" ");
+      return v[0];
     }
   }
 };
