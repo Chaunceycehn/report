@@ -6,12 +6,22 @@ Vue.use(Vuex)
 
 // 创建一个对象来保存应用启动时的初始状态
 // 需要维护的状态
+var CryptoJS = require("crypto-js");
+
+function Encrypt(message) {
+    return CryptoJS.AES.encrypt(`${message}`, "secret key 123").toString();
+}
+// function Decrypt(ciphertext) {
+//     var bytes = CryptoJS.AES.decrypt(ciphertext, "secret key 123");
+//     return bytes.toString(CryptoJS.enc.Utf8);
+// }
+
 const store = new Vuex.Store({
     state: {
         // 放置初始状态 app启动的时候的全局的初始值
         selectedcityname: '温州',
-        starttime: '请输入起始时间',
-        endtime: '请输入结束时间',
+        starttime: '',
+        endtime: '',
         telephonenum: '',
         allreport: [],
         reportdetail: {},
@@ -30,16 +40,21 @@ const store = new Vuex.Store({
             window.localStorage.setItem('endtime', msg);
         },
         getmyreport(state, msg) {
-            state.allreport = msg;
-            window.localStorage.setItem('allreport', JSON.stringify(msg));
+            // // state.allreport = msg;
+            // console.log(Encrypt(JSON.stringify(msg)));
+            // console.log(Decrypt(Encrypt(JSON.stringify(msg))));
+
+            state.allreport = Encrypt(JSON.stringify(msg));
+            window.localStorage.setItem('allreport', Encrypt(JSON.stringify(msg)));
         },
         gettelephonenum(state, msg) {
             state.telephonenum = msg;
             window.localStorage.setItem('telephonenum', msg);
+
         },
         getreportdetail(state, msg) {
-            state.reportdetail = msg;
-            window.localStorage.setItem('reportdetail', JSON.stringify(msg));
+            state.reportdetail = Encrypt(JSON.stringify(msg));
+            window.localStorage.setItem('reportdetail', Encrypt(JSON.stringify(msg)));
         },
 
     }

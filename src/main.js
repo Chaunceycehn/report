@@ -14,6 +14,7 @@ Vue.prototype.$http = axios
 Vue.prototype.$qs = qs
 Vue.config.productionTip = false
 
+ 
 
 let loading  
 axios.interceptors.request.use(config => {

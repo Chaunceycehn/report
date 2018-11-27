@@ -5,28 +5,10 @@
     <morereport></morereport>
     <dropdown></dropdown>
     <dropdown1></dropdown1>
-    <SlimPopup :show.sync="show" :popupClass="['popup']" popupTransition="popupTransition" :hideOnMaskClick='true'>
-      <h2 style="color: #6D7A80;">
-        <img src=".././assets/CTerweima.png" alt="">
-      </h2>
-      <div class="close-btn" @click="show = false">X</div>
-    </SlimPopup>
+
     <hr>
     <div class="logo_div">Powered By Zhejiang Kayi Smart Health Technology Co.,LTD</div>
-    <div class="bottombox">
-      <div class="btnbox">
-        <img class="imgstyle" src=".././assets/医学资料.png">
-        <span>使用说明</span>
-      </div>
-      <div class="btnbox boxboder" id="ewm" @click="show = true">
-        <img class="imgstyle" src=".././assets/图片.png">
-        <span>影像问诊</span>
-      </div>
-      <div class="btnbox">
-        <img class="imgstyle" src=".././assets/档案.png">
-        <span>存个人档案</span>
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -36,7 +18,6 @@ import bind from "@/components/reportdetail/bind";
 import dropdown from "@/components/reportdetail/dropdown";
 import dropdown1 from "@/components/reportdetail/dropdown1";
 import morereport from "@/components/reportdetail/morereport";
-import SlimPopup from "vue-slim-popup";
 
 export default {
   name: "reportdetail",
@@ -46,7 +27,6 @@ export default {
     dropdown,
     dropdown1,
     morereport,
-    SlimPopup
   },
   data() {
     return {
@@ -130,9 +110,11 @@ body {
 }
 hr {
   opacity: 0;
-  margin-bottom: 120px;
+  margin-bottom: 100px;
 }
 .logo_div {
+  position: relative;
+  font-size: 10px;
   width: 100%;
   padding: 0 20px;
   margin: 0 auto;
@@ -141,6 +123,7 @@ hr {
   position: fixed;
   bottom: 60px;
   z-index: -1;
+  margin-top: 60px;
   max-width: 600px;
 }
 .bottombox {
@@ -171,7 +154,7 @@ hr {
 
 .popup {
   width: 80%;
-  height: 200px;
+  height: 400px;
   border-radius: 16px;
   text-align: center;
   background: #fff;

@@ -62,37 +62,62 @@
       <section class="my_nav">
         <a>调阅图像</a>
         <a>图像下载</a>
-        <a>一键分享</a>
+        <a @click="show = true">一键分享</a>
       </section>
       <section class="od_tip">
-        <pre>
-          <span class="tit_new">温馨提示：建议在WiFi环境下调阅图像！</span>
-        </pre>
+        <span class="tit_new">温馨提示：建议在WiFi环境下调阅图像！</span>
       </section>
     </section>
+    <SlimPopup
+      :show.sync="show"
+      :popupClass="['popup']"
+      popupTransition="popupTransition"
+      :hideOnMaskClick="true"
+    >
+      <h2 style="color: #6D7A80;">
+        <img src="../../assets/CTerweima.png" alt="">
+      </h2>
+      <div class="close-btn" @click="show = false">X</div>
+    </SlimPopup>
   </div>
 </template>
 
 <script>
+import SlimPopup from "vue-slim-popup";
+var CryptoJS = require("crypto-js");
+
 export default {
   name: "bind",
+  components: {
+    SlimPopup
+  },
   data() {
     return {
-      report: {}
+      report: {},
+      show: false
     };
   },
   methods: {
+    Encrypt(message) {
+      return CryptoJS.AES.encrypt(message, "secret key 123").toString();
+    },
+    Decrypt(ciphertext) {
+      var bytes = CryptoJS.AES.decrypt(ciphertext, "secret key 123");
+      return bytes.toString(CryptoJS.enc.Utf8);
+    },
     renderreport() {
       this.report = this.reportdetail;
     }
   },
   computed: {
     reportdetail() {
-      let localData = JSON.parse(window.localStorage.getItem("reportdetail"));
+      let localData = JSON.parse(
+        this.Decrypt(window.localStorage.getItem("reportdetail"))
+      );
       if (!this.$store.reportdetail && localData) {
         this.$store.commit("getreportdetail", localData); //同步操作
       }
-      return this.$store.state.reportdetail;
+      return JSON.parse(this.Decrypt(this.$store.state.reportdetail));
     }
   },
   beforeMount() {
@@ -166,10 +191,12 @@ export default {
 .bind_li h2 {
   height: 2.5em;
   line-height: 2em;
-  font-size: 1.2em;
+  font-size: 16px;
   color: #2d2d2d;
   border-bottom: 1px dashed #d3d3d3;
   padding: 0.3em 0.9em 0.6em 0.9em;
+  font-family: Helvetica, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑",
+    Arial, sans-serif;
 }
 
 .bind_li pre {

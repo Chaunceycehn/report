@@ -3,10 +3,12 @@
     <div class="fl personal_head" id="img_id">
       <img src="../../assets/patient_girl.png" width="72px" height="72px">
     </div>
-    <img src="../../assets/左.png" class="left" @click="left">
+    <img src="../../assets/关闭.png" class="left" @click="left">
     <div class="fl personal_info_detail">
       <div class="of pinfo_div">
-        {{report.Name}}&nbsp;&nbsp;<img class="img-circle" id="img_female" src="../../assets/girl.png">&nbsp;&nbsp;{{report.Age}}
+        {{report.Name}}&nbsp;&nbsp;
+        <img class="img-circle" id="img_female" src="../../assets/girl.png">
+        &nbsp;&nbsp;{{report.Age}}
       </div>
       <div class="of font_size15">联系电话：{{report.Telephone}}</div>
       <div class="of font_size15">家庭住址：{{report.Address}}</div>
@@ -15,6 +17,8 @@
 </template>
 
 <script>
+var CryptoJS = require("crypto-js");
+
 export default {
   name: "userinfo",
   data() {
@@ -23,6 +27,13 @@ export default {
     };
   },
   methods: {
+    Encrypt(message) {
+      return CryptoJS.AES.encrypt(message, "secret key 123").toString();
+    },
+    Decrypt(ciphertext) {
+      var bytes = CryptoJS.AES.decrypt(ciphertext, "secret key 123");
+      return bytes.toString(CryptoJS.enc.Utf8);
+    },
     renderreport() {
       this.report = this.reportdetail;
     },
@@ -32,11 +43,13 @@ export default {
   },
   computed: {
     reportdetail() {
-      let localData = JSON.parse(window.localStorage.getItem("reportdetail"));
+      let localData = JSON.parse(
+        this.Decrypt(window.localStorage.getItem("reportdetail"))
+      );
       if (!this.$store.reportdetail && localData) {
         this.$store.commit("getreportdetail", localData); //同步操作
       }
-      return this.$store.state.reportdetail;
+      return JSON.parse(this.Decrypt(this.$store.state.reportdetail));
     }
   },
   beforeMount() {
@@ -57,8 +70,8 @@ export default {
 .left {
   position: absolute;
   width: 20px;
-  left: 10px;
-  top: 10px;
+  right: 20px;
+  top: 20px;
 }
 .personal_info {
   position: relative;

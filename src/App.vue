@@ -27,6 +27,7 @@ html {
 body {
   background-color: #f8f8f8;
   min-height: 100vh;
+
 }
 li {
   list-style: none;

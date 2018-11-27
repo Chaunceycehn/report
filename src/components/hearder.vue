@@ -171,6 +171,7 @@ export default {
   position: absolute;
   left: 2%;
   z-index: 5;
+  text-align: center;
 }
 .dwicon {
   float: left;
@@ -192,7 +193,7 @@ export default {
 .dwbox div {
   float: left;
   font-size: 0.9rem;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .city {
   background: linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));;

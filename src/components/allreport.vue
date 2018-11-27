@@ -3,7 +3,7 @@
     <div class="headbox">
       <div class="title">我的影像/报告</div>
     </div>
-    <div class="noreprot" v-if="lists.length==0">
+    <div class="noreprot" v-if="lists.length==0" @click="gobeck">
       <img src="@/assets/为空.png" alt="" class="weikong">
       <p>暂无影像报告，请点击立即查询</p>
     </div>
@@ -38,18 +38,12 @@
 </template>
 
 <script>
+var CryptoJS = require("crypto-js");
+
 export default {
   data() {
     return {
-      lists: [],
-      colors: [
-        ["#efb04e"],
-        ["#e672a2"],
-        ["#f2eb67"],
-        ["#d15a39"],
-        ["#d0d25c"],
-        ["#5591d2"]
-      ]
+      lists: []
     };
   },
   filters: {
@@ -60,6 +54,16 @@ export default {
     }
   },
   methods: {
+    Encrypt(message) {
+      return CryptoJS.AES.encrypt(message, "secret key 123").toString();
+    },
+    Decrypt(ciphertext) {
+      var bytes = CryptoJS.AES.decrypt(ciphertext, "secret key 123");
+      return bytes.toString(CryptoJS.enc.Utf8);
+    },
+    gobeck() {
+      this.$router.push({ path: "/" });
+    },
     renderlist() {
       this.lists = this.reportdata;
     },
@@ -90,11 +94,11 @@ export default {
   },
   computed: {
     reportdata() {
-      let localData = JSON.parse(window.localStorage.getItem("allreport"));
+      let localData = JSON.parse(this.Decrypt(window.localStorage.getItem("allreport")));
       if (!this.$store.allreport && localData) {
         this.$store.commit("getmyreport", localData); //同步操作
       }
-      return this.$store.state.allreport;
+      return JSON.parse(this.Decrypt(this.$store.state.allreport));
     }
   },
   created() {

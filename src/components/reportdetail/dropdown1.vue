@@ -85,8 +85,11 @@ export default {
   margin-right: 10px;
 }
 .box_content {
+  position: relative;
   padding: 0.3em 0.9em 0.6em 0.9em;
   border-top: 1px solid #e5e5e5;
+  background-color: #fff;
+  z-index: 10;
 }
 
 .img2 {
@@ -111,6 +114,7 @@ export default {
 
 .text1 {
   margin: 5px 0;
+  font-size: 0.9em;
 }
 
 .info_div {

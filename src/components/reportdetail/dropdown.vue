@@ -44,27 +44,7 @@ export default {
 </script>
 
 <style scoped>
-/* .dropbtn {
-  background: #eafefb;
-  padding: 7px 10px;
-  color: #0fcaa8;
-  border-radius: 5px;
-  border: 1px solid #c2f1e9;
-}
 
-.dropbtn:hover {
-  background-color: #c6e7dd;
-}
-
-.dropbtn:focus {
-  background-color: #c6e7dd;
-}
-
-.dropdown-content {
-  padding: 10px;
-  color: #333;
-  line-height: 24px;
-} */
 .fade-enter-active {
   animation: bounce-in 1s;
 }
@@ -99,6 +79,7 @@ export default {
   font-size: 16px;
   color: #333;
   margin-left: 10px;
+  
 }
 .look_all {
   font-size: 12px;
@@ -106,8 +87,11 @@ export default {
   margin-right: 10px;
 }
 .box_content {
+  position: relative;
   padding: 0.3em 0.9em 0.6em 0.9em;
   border-top: 1px solid #e5e5e5;
+  background-color: #fff;
+  z-index: 10;
 }
 
 .img2 {
@@ -132,6 +116,7 @@ export default {
 
 .text1 {
   margin: 5px 0;
+  font-size: 0.9em;
 }
 
 .info_div {

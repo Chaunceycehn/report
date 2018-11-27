@@ -237,7 +237,7 @@ export default {
   },
   destroyed() {
     window.removeEventListener("click", this.eventListener);
-  }
+  },
 };
 </script>
 <style scoped>

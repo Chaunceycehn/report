@@ -3,12 +3,10 @@
     <ul class="patientinput">
       <li>
         <span class="tit">起始日期</span>
-        <div id="targetContainer1"></div>
         <datepicker v-on:input="selectstarttime" :time="starttime"></datepicker>
       </li>
       <li>
         <span class="tit">结束日期</span>
-        <div id="targetContainer2"></div>
         <datepicker v-on:input="selectendtime" :time="endtime"></datepicker>
       </li>
       <li>
@@ -39,6 +37,7 @@
 
 <script>
 import datepicker from "@/components/datepicker.vue";
+var CryptoJS = require("crypto-js");
 export default {
   name: "HelloWorld",
   components: {
@@ -59,7 +58,9 @@ export default {
   },
   watch: {
     telephone: function(el) {
-      if (el !== this.telephonenum) this.vcodeshow = true;
+      var bytes = CryptoJS.AES.decrypt(this.telephonenum, "secret key 123");
+      var originalText = bytes.toString(CryptoJS.enc.Utf8);
+      if (el !== originalText) this.vcodeshow = true;
       else this.vcodeshow = false;
     }
   },
@@ -67,6 +68,13 @@ export default {
     msg: String
   },
   methods: {
+    Encrypt(message) {
+      return CryptoJS.AES.encrypt(message, "secret key 123").toString();
+    },
+    Decrypt(ciphertext) {
+      var bytes = CryptoJS.AES.decrypt(ciphertext, "secret key 123");
+      return bytes.toString(CryptoJS.enc.Utf8);
+    },
     showToast(text, t) {
       this.$toast(text, t);
     },
@@ -79,7 +87,12 @@ export default {
     getCode() {
       if (this.telephoneverification(this.telephone)) {
         this.getvcode();
-        this.$store.commit("gettelephonenum", this.telephone);
+        // Encrypt
+        var ciphertext = CryptoJS.AES.encrypt(
+          this.telephone,
+          "secret key 123"
+        ).toString();
+        this.$store.commit("gettelephonenum", ciphertext);
         const TIME_COUNT = 60;
         if (!this.timer) {
           this.count = TIME_COUNT;
@@ -120,21 +133,14 @@ export default {
           data: this.$qs.stringify({
             param: `{    
             "method": "GetRegionalReports",   
-            "telephone": "${this.telephonenum}",    
+            "telephone": "${this.telephone}",    
             "area_code": "${this.selectedcityname}",    
             "start_time": "${this.starttime}",     
             "end_time": "${this.endtime}" }`
           })
         })
           .then(response => {
-            // let arry = this.picarray(response.data);
-            // console.log(response.data.data);
             this.$store.commit("getmyreport", response.data.data);
-            // console.log(arry);
-            // for (let i = 0; i < arry.length - 1; i++) {
-            //   console.log(JSON.parse(arry[i]));
-            // }
-            
             if (response.data.success === "false") {
               this.showToast(response.data.data, 2000);
             } else if (response.data.data.length === 0) {
@@ -212,6 +218,7 @@ export default {
     },
     telephonenum() {
       let localData = window.localStorage.getItem("telephonenum");
+
       if (!this.$store.telephonenum && localData) {
         this.$store.commit("gettelephonenum", localData); //同步操作
       }
@@ -219,9 +226,30 @@ export default {
     }
   },
   mounted() {
-    this.telephone = this.telephonenum;
-    // console.log("this.starttime");
-    // console.log(this.starttime);
+    // Decrypt
+    var bytes = CryptoJS.AES.decrypt(this.telephonenum, "secret key 123");
+    var originalText = bytes.toString(CryptoJS.enc.Utf8);
+    this.telephone = originalText;
+    let Y, M, D, DATE;
+    Y = new Date().getFullYear() + "-";
+    M =
+      (new Date().getMonth() + 1 < 10
+        ? "0" + (new Date().getMonth() + 1)
+        : new Date().getMonth() + 1) + "-";
+    D = new Date().getDate() + " ";
+    DATE = Y + M + D;
+    this.$store.commit("selectendtime", DATE);
+    let Y2, M2, D2, DATE2;
+    Y2 = new Date().getFullYear() + "-";
+    M2 =
+      (new Date().getMonth() + 1 < 10
+        ? "0" + (new Date().getMonth() + 1)
+        : new Date().getMonth() + 1) -
+      2 +
+      "-";
+    D2 = new Date().getDate() + " ";
+    DATE2 = Y2 + M2 + D2;
+    this.$store.commit("selectstarttime", DATE2);
   }
 };
 </script>
@@ -248,6 +276,7 @@ export default {
   text-align: center;
   line-height: 2.5rem;
   margin: 5px 0px;
+  position: relative;
 }
 .patientinput .tit {
   font-size: 1rem;
@@ -260,22 +289,22 @@ export default {
   text-align: center;
   display: inline-block;
   position: absolute;
-  right: 3%;
+  right: 10px;
   padding: 0 5px;
   height: 2.5rem;
   line-height: 2.5rem;
   font-size: 12px;
   color: white;
-  background: #41b883;
+  background: #00d2c7;
   outline: none;
-  border-radius: 0;
   border: 0;
+  border-radius: 4px;
 }
 .btn:hover {
-  background: #18836a;
+  background: #00d2c7;
 }
 .btn:active {
-  background: #18836a;
+  background: #00d2c7;
 }
 .btn.current {
   background: #b1b1b1;
@@ -285,16 +314,16 @@ export default {
   text-align: center;
   display: inline-block;
   position: absolute;
-  right: 3%;
+  right: 10px;
   padding: 0 5px;
   height: 2.5rem;
   line-height: 2.5rem;
   font-size: 12px;
   color: white;
-  outline: none;
-  border-radius: 0;
-  border: 0;
   background: #b1b1b1;
+  outline: none;
+  border: 0;
+  border-radius: 4px;
 }
 input {
   padding-left: 10px;
@@ -318,7 +347,7 @@ input {
   font-size: 14px;
   width: 80%;
   padding: 10px;
-  background:linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
+  background: linear-gradient(45deg, #00d2c7, rgba(0, 190, 156, 0.6));
   color: white;
   display: flex;
   justify-content: center;
@@ -327,10 +356,10 @@ input {
   margin-top: 20px;
 }
 .Advisory:hover {
-  background: #06c193;
+  background: #00c2b8;
 }
 .Advisory:active {
-  background: #06c193;
+  background: #00d2c7;
 }
 .getreport {
   margin: 20px 0;
