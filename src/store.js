@@ -48,8 +48,8 @@ const store = new Vuex.Store({
             window.localStorage.setItem('allreport', Encrypt(JSON.stringify(msg)));
         },
         gettelephonenum(state, msg) {
-            state.telephonenum = msg;
-            window.localStorage.setItem('telephonenum', msg);
+            state.telephonenum = Encrypt(msg);
+            window.localStorage.setItem('telephonenum', Encrypt(msg));
 
         },
         getreportdetail(state, msg) {

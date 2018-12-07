@@ -94,11 +94,16 @@ export default {
   },
   computed: {
     reportdata() {
-      let localData = JSON.parse(this.Decrypt(window.localStorage.getItem("allreport")));
+      let localData = window.localStorage.getItem("allreport");
       if (!this.$store.allreport && localData) {
-        this.$store.commit("getmyreport", localData); //同步操作
+        this.$store.commit("getmyreport", JSON.parse(this.Decrypt(localData))); //同步操作
       }
-      return JSON.parse(this.Decrypt(this.$store.state.allreport));
+      if (this.$store.state.allreport.length !== 0) {
+        return JSON.parse(this.Decrypt(this.$store.state.allreport));
+      }
+      else{
+        return []
+      }
     }
   },
   created() {

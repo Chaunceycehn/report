@@ -58,9 +58,8 @@ export default {
   },
   watch: {
     telephone: function(el) {
-      var bytes = CryptoJS.AES.decrypt(this.telephonenum, "secret key 123");
-      var originalText = bytes.toString(CryptoJS.enc.Utf8);
-      if (el !== originalText) this.vcodeshow = true;
+
+      if (el !== this.telephonenum) this.vcodeshow = true;
       else this.vcodeshow = false;
     }
   },
@@ -87,12 +86,7 @@ export default {
     getCode() {
       if (this.telephoneverification(this.telephone)) {
         this.getvcode();
-        // Encrypt
-        var ciphertext = CryptoJS.AES.encrypt(
-          this.telephone,
-          "secret key 123"
-        ).toString();
-        this.$store.commit("gettelephonenum", ciphertext);
+        this.$store.commit("gettelephonenum", this.telephone);
         const TIME_COUNT = 60;
         if (!this.timer) {
           this.count = TIME_COUNT;
@@ -218,18 +212,15 @@ export default {
     },
     telephonenum() {
       let localData = window.localStorage.getItem("telephonenum");
-
       if (!this.$store.telephonenum && localData) {
-        this.$store.commit("gettelephonenum", localData); //同步操作
+        this.$store.commit("gettelephonenum", this.Decrypt(localData)); //同步操作
       }
-      return this.$store.state.telephonenum;
+      return this.Decrypt(this.$store.state.telephonenum);
     }
   },
   mounted() {
-    // Decrypt
-    var bytes = CryptoJS.AES.decrypt(this.telephonenum, "secret key 123");
-    var originalText = bytes.toString(CryptoJS.enc.Utf8);
-    this.telephone = originalText;
+
+    this.telephone = this.telephonenum;
     let Y, M, D, DATE;
     Y = new Date().getFullYear() + "-";
     M =

@@ -7,7 +7,11 @@
     <div class="fl personal_info_detail">
       <div class="of pinfo_div">
         {{report.Name}}&nbsp;&nbsp;
-        <img class="img-circle" id="img_female" src="../../assets/girl.png">
+        <img
+          class="img-circle"
+          id="img_female"
+          src="../../assets/girl.png"
+        >
         &nbsp;&nbsp;{{report.Age}}
       </div>
       <div class="of font_size15">联系电话：{{report.Telephone}}</div>
@@ -43,13 +47,20 @@ export default {
   },
   computed: {
     reportdetail() {
-      let localData = JSON.parse(
-        this.Decrypt(window.localStorage.getItem("reportdetail"))
-      );
+      let localData = window.localStorage.getItem("reportdetail");
+
       if (!this.$store.reportdetail && localData) {
-        this.$store.commit("getreportdetail", localData); //同步操作
+        this.$store.commit(
+          "getreportdetail",
+          JSON.parse(this.Decrypt(localData))
+        ); //同步操作
       }
-      return JSON.parse(this.Decrypt(this.$store.state.reportdetail));
+      if (typeof this.$store.state.reportdetail == "string") {
+        return JSON.parse(this.Decrypt(this.$store.state.reportdetail));
+      } else {
+        this.$router.push({ path: "/" });
+        return [];
+      }
     }
   },
   beforeMount() {
